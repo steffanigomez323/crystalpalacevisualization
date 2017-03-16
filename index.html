@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Crystal Palace Visualization</title>
+	<meta charset="utf-8">
+  <meta name="description" content="crystal palace visualization for talk">
+  <meta name="author" content="Steffani Gomez">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+  <!--# CSS #}-->
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+
+  <!-- JQUERY -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
+  <!-- D3.js -->
+  <script src="https://d3js.org/d3.v4.js"></script> 
+  <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+</head>
+
+<body>
+  <h1> Crystal Palace Visualization </h1>
+    <p>Please select the country from which to display items:</p>
+    <select id="countries" multiple=""> 
+    </select>
+  </div>
+  <div id="classdropdown">
+    <p>Please select the class of items to view:</p>
+    <select id="classes" multiple> 
+    </select>
+  </div>
+  <div id="countrydropdown">
+  <!--# JAVASCRIPT #}-->
+  <script src="js/floorplan.js"></script>
+  <script src="js/main.js"></script>
+  <svg></svg>
+</body>
+</html>

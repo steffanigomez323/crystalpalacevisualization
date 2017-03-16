@@ -1,0 +1,14 @@
+body {
+	body {
+  		font-family: 'Montserrat', sans-serif;
+  	}
+}
+
+.tooltip {
+  position: absolute;
+  width: 200px;
+  height: 28px;
+  pointer-events: none;
+  color: black;
+  font-weight: bold;
+}
