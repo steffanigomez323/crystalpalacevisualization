@@ -2,8 +2,7 @@ function buildfloorplan(data, datadict) {
 	var margin = {top: 10, right: 10, bottom: 10, left: 10},
     width = 700,
     height = 700;
-    //width = 700 - margin.left - margin.right,
-    //height = 700 - margin.top - margin.bottom;
+
 
 	var svg = d3.select("svg")
 		.attr("width", width+margin.left+margin.right)
@@ -40,11 +39,11 @@ function buildfloorplan(data, datadict) {
 	 	.attr("y", 0)
 	 	.attr("width", 693)
 	 	.attr("height", 39)
+	 	.attr("id", "machinearcade")
 	 	.attr("fill", "transparent")
 	 	.attr("stroke", "black")
 	 	.attr("stroke-width", 2)
 	 	.on("mouseover", function(d) {	
-	 		console.log(datadict["Machine Arcade"])	
             div.transition()		
                 .duration(200)		
                 .style("opacity", .9);		
@@ -766,16 +765,4 @@ function buildfloorplan(data, datadict) {
   		}
   		return infosentence;
   	}
-  }
-
-  function displayCountry() {
-
-  }
-
-  function displayClass() {
-
-  }
-
-  function displayBoth() {
-  	
   }
