@@ -10,22 +10,47 @@ $(document).ready(function() {
   			var objects = [];
   			var elements = $('#countries option');
   			var countryitems = 0;
-  			for (var h = 0; h < elements.length; h++) {
-  				if (elements[h].selected == true) {
-  					var country = elements[h].value;
-  					for (var i = 0; i < data.length; i++) {
-  						if (data[i].country == country) {
-  							var objectsection = data[i].Division;
-  							var numberPattern = /\d+/g;
-							var squares = data[i].Court.match(numberPattern);
-  							if (data[i].Court === "Machine Arcade") {
-  								$('#machinearcade').css({ fill: "pink" });
-  								countryitems++;
-  							} else if (squares != null) {
-  								squares.forEach(function(d) {
-  									$('#' + objectsection + d).css({ fill: "pink" });
+  			for (var j = 0; j < elements.length; j++) {
+  				if (elements[j].selected == true) {
+  					var country = elements[j].value;
+  					if (document.getElementById("andoperation").checked == true) {
+  						for (var h = 0; h < $('#itemclasses option').length; h++) {
+  							if ($('#itemclasses option')[h].selected == true) {
+  								var classitems = $('#itemclasses option')[h].value;
+  								for (var i = 0; i < data.length; i++) {
+  									if (data[i].class == classitems && data[i].country == country) {
+  										var objectsection = data[i].Division;
+  										var numberPattern = /\d+/g;
+										var squares = data[i].Court.match(numberPattern);
+  										if (data[i].Court === "Machine Arcade") {
+  											$('#machinearcade').css({ fill: "blue" });
+  											countryitems++;
+	  									} else if (squares != null) {
+  											squares.forEach(function(d) {
+  												$('#' + objectsection + d).css({ fill: colordict[classitems] });
+  												countryitems++;
+  											});
+  										}
+  									}
+  								}
+  							}
+  						}
+  					}
+  					else {
+  						for (var i = 0; i < data.length; i++) {
+  							if (data[i].country == country) {
+  								var objectsection = data[i].Division;
+  								var numberPattern = /\d+/g;
+								var squares = data[i].Court.match(numberPattern);
+  								if (data[i].Court === "Machine Arcade") {
+  									$('#machinearcade').css({ fill: "pink" });
   									countryitems++;
-  								});
+  								} else if (squares != null) {
+  									squares.forEach(function(d) {
+  										$('#' + objectsection + d).css({ fill: "pink" });
+  										countryitems++;
+  									});
+  								}
   							}
   						}
   					}
@@ -59,25 +84,48 @@ $(document).ready(function() {
   			var selected = []
   			var classitems = 0;
   			var counted = 0
-  			for (var h = 0; h < elements.length; h++) {
-  				if (elements[h].selected == true) {
-  					var classitems = elements[h].value;
-  					for (var i = 0; i < data.length; i++) {
-  						if (data[i].class == classitems) {
-  							counted++;
-  							console.log(data[i]);
-  							var objectsection = data[i].Division;
-  							var numberPattern = /\d+/g;
-							var squares = data[i].Court.match(numberPattern);
-  							if (data[i].Court === "Machine Arcade") {
-  								$('#machinearcade').css({ fill: "blue" });
-  								selected.push('machinearcade');
-  								//counted++;
-  							} else if (squares != null) {
-  								squares.forEach(function(d) {
-  									$('#' + objectsection + d).css({ fill: colordict[classitems] });
-  									selected.push(objectsection + d);
-  								});
+  			for (var j = 0; j < elements.length; j++) {
+  				if (elements[j].selected == true) {
+  					var classitems = elements[j].value;
+  					if (document.getElementById("andoperation").checked == true) {
+  						for (var h = 0; h < $('#countries option').length; h++) {
+  							if ($('#countries option')[h].selected == true) {
+  								var country = $('#countries option')[h].value;
+  								for (var i = 0; i < data.length; i++) {
+  									if (data[i].country == country && data[i].class == classitems) {
+  										var objectsection = data[i].Division;
+  										var numberPattern = /\d+/g;
+										var squares = data[i].Court.match(numberPattern);
+  										if (data[i].Court === "Machine Arcade") {
+  											$('#machinearcade').css({ fill: "pink" });
+  											counted++;
+  										} else if (squares != null) {
+  											squares.forEach(function(d) {
+  												$('#' + objectsection + d).css({ fill: "pink" });
+  												counted++;
+  											});
+  										}
+  									}
+  								}
+  							}
+  						}
+  					} else {
+  						for (var i = 0; i < data.length; i++) {
+  							if (data[i].class == classitems) {
+  								var objectsection = data[i].Division;
+  								var numberPattern = /\d+/g;
+								var squares = data[i].Court.match(numberPattern);
+  								if (data[i].Court === "Machine Arcade") {
+  									$('#machinearcade').css({ fill: "blue" });
+  									counted++;
+  									selected.push('machinearcade');
+  								} else if (squares != null) {
+  									squares.forEach(function(d) {
+  										$('#' + objectsection + d).css({ fill: colordict[classitems] });
+  										selected.push(objectsection + d);
+  										counted++;
+  									});
+  								}
   							}
   						}
   					}
@@ -94,7 +142,7 @@ $(document).ready(function() {
   							var numberPattern = /\d+/g;
 							var squares = data[k].Court.match(numberPattern);
   							if (data[k].Court === "Machine Arcade") {
-  								if (document.getElementById('machinearcade').style.fill == "transparent" && selected.indexOf('machinearcade') == -1) {
+  								if (document.getElementById('machinearcade').style.fill != "transparent" && selected.indexOf('machinearcade') == -1) {
   									$('#machinearcade').css({ fill: "transparent" });
   								}
   							} else if (squares != null) {

@@ -4,6 +4,15 @@ body {
   	}
 }
 
+#countrydropdown {
+	display: inline-block;
+	float: right;
+}
+
+svg {
+	display: inline-block;
+}
+
 /*.tooltip {
   position: absolute;
   width: 200px;
