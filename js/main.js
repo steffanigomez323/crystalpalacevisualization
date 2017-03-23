@@ -10,6 +10,7 @@ $(document).ready(function() {
   			var objects = [];
   			var elements = $('#countries option');
   			var countryitems = 0;
+  			selected = []
   			for (var j = 0; j < elements.length; j++) {
   				if (elements[j].selected == true) {
   					var country = elements[j].value;
@@ -25,12 +26,12 @@ $(document).ready(function() {
   										if (data[i].Court === "Machine Arcade") {
   											$('#machinearcade').css({ fill: "blue" });
   											countryitems++;
-  											console.log('country');
+  											selected.push('machinearcade');
 	  									} else if (squares != null) {
   											squares.forEach(function(d) {
   												$('#' + objectsection + d).css({ fill: colordict[classitems] });
   												countryitems++;
-  												console.log('country');
+  												selected.push(objectsection + d);
   											});
   										}
   									}
@@ -47,10 +48,12 @@ $(document).ready(function() {
   								if (data[i].Court === "Machine Arcade") {
   									$('#machinearcade').css({ fill: "pink" });
   									countryitems++;
+  									selected.push('machinearcade');
   								} else if (squares != null) {
   									squares.forEach(function(d) {
   										$('#' + objectsection + d).css({ fill: "pink" });
   										countryitems++;
+  										selected.push(objectsection + d);
   									});
   								}
   							}
@@ -102,13 +105,11 @@ $(document).ready(function() {
   											$('#machinearcade').css({ fill: "pink" });
   											counted++;
   											selected.push('machinearcade');
-  											console.log('class');
   										} else if (squares != null) {
   											squares.forEach(function(d) {
   												$('#' + objectsection + d).css({ fill: colordict[classitems] });
   												counted++;
   												selected.push(objectsection + d);
-  												console.log('class');
   											});
   										}
   									}
@@ -150,13 +151,11 @@ $(document).ready(function() {
   							if (data[k].Court === "Machine Arcade") {
   								if (document.getElementById('machinearcade').style.fill != "transparent" && selected.indexOf('machinearcade') == -1) {
   									$('#machinearcade').css({ fill: "transparent" });
-  									console.log('here');
   								}
   							} else if (squares != null) {
   								squares.forEach(function(d) {
   									if (document.getElementById(objectsection + d).style.fill != "transparent" && selected.indexOf(objectsection + d) == -1) {
   										$('#' + objectsection + d).css({ fill: "transparent" });
-  										console.log('here here');
   									}
   								});
   							}
