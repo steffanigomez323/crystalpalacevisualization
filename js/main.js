@@ -1,7 +1,7 @@
 $(document).ready(function() {
-	populateClasses();
-	populateCountries();
 	d3.csv("data/crystal-palace-catalog.csv", function(error, data) {
+		colordict = populateClasses();
+		populateCountries();
 	    console.log(data);
 	    datadict = filltooltipArray(data);
 	    console.log(datadict);
@@ -58,23 +58,25 @@ $(document).ready(function() {
   			var elements = $('#itemclasses option');
   			var selected = []
   			var classitems = 0;
+  			var counted = 0
   			for (var h = 0; h < elements.length; h++) {
   				if (elements[h].selected == true) {
   					var classitems = elements[h].value;
   					for (var i = 0; i < data.length; i++) {
   						if (data[i].class == classitems) {
+  							counted++;
+  							console.log(data[i]);
   							var objectsection = data[i].Division;
   							var numberPattern = /\d+/g;
 							var squares = data[i].Court.match(numberPattern);
   							if (data[i].Court === "Machine Arcade") {
   								$('#machinearcade').css({ fill: "blue" });
   								selected.push('machinearcade');
-  								classitems++;
+  								//counted++;
   							} else if (squares != null) {
   								squares.forEach(function(d) {
-  									$('#' + objectsection + d).css({ fill: "blue" });
+  									$('#' + objectsection + d).css({ fill: colordict[classitems] });
   									selected.push(objectsection + d);
-  									classitems++;
   								});
   							}
   						}
@@ -82,7 +84,7 @@ $(document).ready(function() {
   				}
   			}
   			var dimdiv = document.getElementById('dimensionality');
-  			dimdiv.innerHTML = 'The number of items: ' + classitems.toString();
+  			dimdiv.innerHTML = 'The number of items: ' + counted.toString();
   			for (var j = 0; j < elements.length; j++) {
       			if (elements[j].selected == false) {
       				var classitems = elements[j].value;
@@ -92,12 +94,12 @@ $(document).ready(function() {
   							var numberPattern = /\d+/g;
 							var squares = data[k].Court.match(numberPattern);
   							if (data[k].Court === "Machine Arcade") {
-  								if (document.getElementById('machinearcade').style.fill == "blue" && selected.indexOf('machinearcade') == -1) {
+  								if (document.getElementById('machinearcade').style.fill == "transparent" && selected.indexOf('machinearcade') == -1) {
   									$('#machinearcade').css({ fill: "transparent" });
   								}
   							} else if (squares != null) {
   								squares.forEach(function(d) {
-  									if (document.getElementById(objectsection + d).style.fill == "blue" && selected.indexOf(objectsection + d) == -1) {
+  									if (document.getElementById(objectsection + d).style.fill != "transparent" && selected.indexOf(objectsection + d) == -1) {
   										$('#' + objectsection + d).css({ fill: "transparent" });
   									}
   								});
@@ -111,13 +113,58 @@ $(document).ready(function() {
 });
 
 function populateClasses() {
-	for (var i = 1; i < 32; i++)
+	colordict = {}
+	classesdict = {
+		1: 'Minerals, Mining and Metallurgy', 
+		2: 'Chemical and Pharmaceutical',
+		3: 'Substances used as Food',
+		4: 'Vegetable and Animal Substances',
+		5: 'Machines and Railway',
+		6: 'Machinery and Tools for Manufacturing',
+		7: 'Civil Engineering, Architectural and Building',
+		8: 'Naval Architecture and Military Engineering',
+		9: 'Agricultural, Horticultural, and Dairy Machinery', 
+		10: 'Philosophical Instruments (including Daguerreotypes)', 
+		11: 'Manufacturers of Cotton',
+		12: 'Manufactures of Wool',
+		13: 'Manufactures of Silk',
+		14: 'Manufactures of Flax and Hemp',
+		15: 'Mixed Fabrics',
+		16: 'Leather, Furs, and Hair',
+		17: 'Paper and Stationery, Types, Printing and Bookbinding',
+		18: 'Dyed and Printed Fabrics',
+		19: 'Tapestry &c.',
+		20: 'Wearing Apparel',
+		21: 'Cutlery and Edge Tools',
+		22: 'Iron, Brass, Pewter, and General Hardware',
+		23: 'Work in Precious Metals',
+		24: 'Glass Manufactures',
+		25: 'Porcelain and other Ceramic Manufactures',
+		26: 'Decorative Furniture and Upholstery',
+		27: 'Manufactures in Marble, Slate, etc.',
+		28: 'Other Manufactures from Animal and Vegetable Substances',
+		29: 'Miscellaneous Manufactures',
+		30: 'Musical Instruments' }
+
+	for (var i = 1; i < 31; i++)
 	{
 		$('#itemclasses').append($('<option>', {
     		value: i.toString(),
-    		text: i.toString()
+    		text: i.toString() + ": " + classesdict[i]
 		}));
+		if (i < 5) {
+			colordict[i] = '#00FFFF';
+		} else if (i >= 5 && i < 11) {
+			colordict[i] = '#00FF00'
+		} else if (i >= 11 && i < 21) {
+			colordict[i] = '#FFFF00'
+		} else if (i >= 21 && i < 30) {
+			colordict[i] = '#FF00FF'
+		} else {
+			colordict[i] = '#0000FF'
+		}
 	}
+	return colordict;
 };
 
 function populateCountries() {
