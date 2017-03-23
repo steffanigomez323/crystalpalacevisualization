@@ -25,10 +25,12 @@ $(document).ready(function() {
   										if (data[i].Court === "Machine Arcade") {
   											$('#machinearcade').css({ fill: "blue" });
   											countryitems++;
+  											console.log('country');
 	  									} else if (squares != null) {
   											squares.forEach(function(d) {
   												$('#' + objectsection + d).css({ fill: colordict[classitems] });
   												countryitems++;
+  												console.log('country');
   											});
   										}
   									}
@@ -92,17 +94,21 @@ $(document).ready(function() {
   							if ($('#countries option')[h].selected == true) {
   								var country = $('#countries option')[h].value;
   								for (var i = 0; i < data.length; i++) {
-  									if (data[i].country == country && data[i].class == classitems) {
+  									if (data[i].class == classitems && data[i].country == country) {
   										var objectsection = data[i].Division;
   										var numberPattern = /\d+/g;
 										var squares = data[i].Court.match(numberPattern);
   										if (data[i].Court === "Machine Arcade") {
   											$('#machinearcade').css({ fill: "pink" });
   											counted++;
+  											selected.push('machinearcade');
+  											console.log('class');
   										} else if (squares != null) {
   											squares.forEach(function(d) {
-  												$('#' + objectsection + d).css({ fill: "pink" });
+  												$('#' + objectsection + d).css({ fill: colordict[classitems] });
   												counted++;
+  												selected.push(objectsection + d);
+  												console.log('class');
   											});
   										}
   									}
@@ -144,11 +150,13 @@ $(document).ready(function() {
   							if (data[k].Court === "Machine Arcade") {
   								if (document.getElementById('machinearcade').style.fill != "transparent" && selected.indexOf('machinearcade') == -1) {
   									$('#machinearcade').css({ fill: "transparent" });
+  									console.log('here');
   								}
   							} else if (squares != null) {
   								squares.forEach(function(d) {
   									if (document.getElementById(objectsection + d).style.fill != "transparent" && selected.indexOf(objectsection + d) == -1) {
   										$('#' + objectsection + d).css({ fill: "transparent" });
+  										console.log('here here');
   									}
   								});
   							}

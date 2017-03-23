@@ -3,21 +3,3 @@ body {
   		font-family: 'Montserrat', sans-serif;
   	}
 }
-
-#countrydropdown {
-	display: inline-block;
-	float: right;
-}
-
-svg {
-	display: inline-block;
-}
-
-/*.tooltip {
-  position: absolute;
-  width: 200px;
-  height: 28px;
-  pointer-events: none;
-  color: black;
-  font-weight: bold;
-}*/
