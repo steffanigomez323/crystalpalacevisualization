@@ -22,25 +22,65 @@
 
 <body>
   <h1> Crystal Palace Visualization </h1>
-  <div id="countrydropdown">
-    <p>Please select the country from which to display items:</p>
-    <select id="countries" multiple> 
-    </select>
+  <div id="visualization">
+    <div id="queries">
+      <div id="query1choice">
+        <p> Query 1 </p>
+        <div id="countrydropdown">
+          <p>Country:</p>
+          <select id="countries" multiple> 
+          </select>
+        </div>
+        <div id="classdropdown">
+          <p>Product Class:</p>
+          <select id="itemclasses" multiple> 
+          </select>
+        </div>
+      </div>
+      <br>
+      <div id="query2choice">
+        <p> Query 2 </p>
+        <div id="countrydropdown2">
+          <p>Country:</p>
+          <select id="countries2" multiple> 
+          </select>
+        </div>
+        <div id="classdropdown2">
+          <p>Product Class:</p>
+          <select id="itemclasses2" multiple> 
+          </select>
+        </div>
+      </div>
+    </div>
+    <svg id="firstfloor"></svg>
+    <svg id="secondfloor"></svg>
   </div>
-  <div id="classdropdown">
-    <p>Please select the class of items to view:</p>
-    <select id="itemclasses" multiple> 
-    </select>
+
+  <div class="tab" id="tab">
+    <button class="tablinks" onclick="openCity(event, 'query1')">Query 1</button>
+    <button class="tablinks" onclick="openCity(event, 'query2')">Query 2</button>
   </div>
-  <p>
-    <input type="checkbox" id="andoperation" value="andoperation">
-    <label for="andoperation">Please select this box if you want to view the location of items in a country and class.</label>
-  </p>
-  <div id="dimensionality">
+
+  <div id="query1" class="tabcontent">
+    <div id="dimensionality1">
+    </div>
+    <div id="results1" style="overflow-y:auto;">
+      <table id="resultstable1">
+      </table>
+    </div>
   </div>
+
+  <div id="query2" class="tabcontent">
+    <div id="dimensionality2">
+    </div>
+    <div id="results2" style="overflow-y:auto;">
+      <table id="resultstable2">
+      </table>
+    </div>
+  </div>
+
   <!--# JAVASCRIPT #}-->
   <script src="js/floorplan.js"></script>
   <script src="js/main.js"></script>
-  <svg></svg>
 </body>
 </html>
