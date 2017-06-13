@@ -29,161 +29,67 @@ $(document).ready(function() {
       "white": [255,255,255]
     }
     coloradder = {
+      // mixing of colors
 
     }
-	    datadict = filltooltipArray(data);
-	    buildfloorplan(data, datadict);
-      var massqueries = [];
-      var query1selected = [];
-      var query2selected = [];
-	    $('#countries').on("change", { items: 'data' }, function(event) {
-  			var objects = [];
-  			var countryelements = $('#countries option');
-        var classelements = $('#itemclasses option');
-  			//var countryitems = 0;
-        query1selected = [];
-        var itemselected = [];
-
-        var countryvalues = [];
-        var classvalues = [];
-        var count = 0;
-
-        for (var a = 0; a < countryelements.length; a++) {
-          if (countryelements[a].selected == true) {
-            countryvalues.push(countryelements[a].value);
+    datadict = filldataArray(data);
+    buildfloorplan(data, datadict);
+    var massqueries = [];
+    var query1selected = []; // the items on the map that are selected and colored
+    var query2selected = [];
+    $('#countries').on("change", { items: 'data' }, function(event) {
+			var countryelements = $('#countries option');
+      var classelements = $('#itemclasses option');
+      query1selected = []; // the items that are selected in query 1
+      var itemselected = [];
+      var countryvalues = []; // the countries that are selected
+      var classvalues = []; // the classes that are selected
+      // right now everything works as an AND, if both class and country are selected then it will do an AND, 
+      // since the two queries allow an OR to be done, if you want a class or a country, you select a class for
+      // 1 query and a country for the other (check to make sure this logic is true)
+      var count = 0;
+      for (var a = 0; a < countryelements.length; a++) {
+        if (countryelements[a].selected == true) {
+          countryvalues.push(countryelements[a].value);
+        }
+      }
+      for (var b = 0; b < classelements.length; b++) {
+        if (classelements[b].selected == true) {
+          classvalues.push(classelements[b].value);
+        }
+      }
+      for (var i = 0; i < data.length; i++) {
+        // have to check if the item's country corresponds with any of the countries selected
+        for (var a = 0; a < countryvalues.length; a++) {
+          if (data[i].country == countryvalues[a]) {
+            colorMapItem(itemselected, data[i], query1selected, colordict, count);
           }
         }
-
-        for (var b = 0; b < classelements.length; b++) {
-          if (classelements[b].selected == true) {
-            classvalues.push(classelements[b].value);
+        for (var b = 0; b < classvalues.length; b++) {
+          if (data[i].class == classvalues[b]) {
+            colorMapItem(itemselected, data[i], query1selected, colordict, count);
           }
         }
-
-        for (var i = 0; i < data.length; i++) {
-          var countryfound = false;
-          var classfound = false;
-          var country = null;
-          var classitem = null;
-          var num = 0;
-          for (var a = 0; a < countryvalues.length; a++) {
-            if (data[i].country == countryvalues[a]) {
-              countryfound = true;
-              country = countryvalues[a];
-              itemselected.push(data[i]);
-              var objectsection = data[i].Division;
-              objectsection = objectsection.split(", ");
-              if (objectsection[0] == false) {
-                break;
-              }
-              var courtsquares = data[i].Court;//.match(numberPattern); // Court
-              courtsquares = courtsquares.split(", ");
-              if (classitem == null) {
-                classitem = data[i].class;
-              }
-              count++;
-              if (courtsquares[0]) {
-                courtsquares.forEach(function(square) {
-                  objectsection.forEach(function(section) {
-                    if (section !== "Gallery" && Number.isInteger(square)) {
-                      if (parseInt(square) >= 30) {
-                              $('#' + section + square).css({ fill: "pink"});
-                              query1selected.push(section + square);
-                      }
-                    } else if (section === "Gallery" && Number.isInteger(square) == false) {
-                              $('.' + gallerydict[square]).css({ fill: "pink"});
-                              query1selected.push(gallerydict[square]);
-
-                    } else if ((section === "A" || section === "B" || section === "C" || section === "D") && square === "Machine Arcade") {
-                      $('#machinearcade').css({ fill: "pink" });
-                      query1selected.push('machinearcade');
-                      for (var index = 1; index < 30; index++) {
-                        
-                              $('#' + section + String(index)).css({ fill: "pink"});
-                              query1selected.push(section + String(index));
-                      }
-                    }
-                    else if (section !== "Gallery" && Number.isInteger(square) == false) {
-                      for (var index = 1; index < 30; index++) {
-                        
-                              $('#' + section + String(index)).css({ fill: "pink"});
-                              query1selected.push(section + String(index));
-                      }
-                    }
-                  });
-                });
-              }
-            }
-          }
-          for (var b = 0; b < classvalues.length; b++) {
-            if (data[i].class == classvalues[b]) {
-              classfound = true;
-              classitem = classvalues[b];
-              itemselected.push(data[i]);
-              var objectsection = data[i].Division;
-              objectsection = objectsection.split(", ");
-              if (objectsection[0] == false) {
-                break;
-              }
-              var courtsquares = data[i].Court;//.match(numberPattern); // Court
-              courtsquares = courtsquares.split(", ");
-              if (classitem == null) {
-                classitem = data[i].class;
-              }
-              count++;
-              if (courtsquares[0]) {
-                courtsquares.forEach(function(square) {
-                  objectsection.forEach(function(section) {
-                    if (section !== "Gallery" && Number.isInteger(square)) {
-                      if (parseInt(square) >= 30) {
-                        $('#' + section + square).css({ fill: "pink"});
-                        query1selected.push(section + square);
-                      }
-                    } else if (section === "Gallery" && Number.isInteger(square) == false) {
-                      $('.' + gallerydict[square]).css({ fill: "pink"});
-                      query1selected.push(gallerydict[square]);
-                    } else if ((section === "A" || section === "B" || section === "C" || section === "D") && square === "Machine Arcade") {
-                      $('#machinearcade').css({ fill: "pink" });
-                      query1selected.push('machinearcade');
-                      for (var index = 1; index < 30; index++) {
-                        $('#' + section + String(index)).css({ fill: "pink"});
-                        query1selected.push(section + String(index));
-                      }
-                    }
-                    else if (section !== "Gallery" && Number.isInteger(square) == false) {
-                      for (var index = 1; index < 30; index++) {
-                        $('#' + section + String(index)).css({ fill: "pink"});
-                        query1selected.push(section + String(index));
-                      }
-                    }
-                  });
-                });
-              }
-            }
-          }
-        }
-        displayResults(itemselected, 1);
-  			var dimdiv = document.getElementById('dimensionality1');
-  			dimdiv.innerHTML = 'The number of items: ' + count.toString();
-        massqueries = query1selected;
-        massqueries = massqueries.concat(query2selected);
-        console.log(query1selected);
-        console.log(query2selected);
-        console.log(massqueries);
-  			for (var j = 0; j < countryelements.length; j++) {
-          checkTransparentCountry(countryelements[j], massqueries, data, gallerydict);
-    		}
-	    });
+      }
+      displayResults(itemselected, 1);
+			var dimdiv = document.getElementById('dimensionality1');
+			dimdiv.innerHTML = 'The number of items: ' + count.toString();
+      massqueries = query1selected;
+      massqueries = massqueries.concat(query2selected);
+      //console.log(query1selected);
+      //console.log(query2selected);
+      //console.log(massqueries);
+			for (var j = 0; j < countryelements.length; j++) {
+        checkTransparentCountry(countryelements[j], massqueries, data, gallerydict);
+  		}
+	   });
 
   
       $('#itemclasses').on("change", { items: 'data' }, function(event) {
-        var objects = [];
         var countryelements = $('#countries option');
         var classelements = $('#itemclasses option');
-        //var countryitems = 0;
         query1selected = [];
         var itemselected = [];
-
         var countryvalues = [];
         var classvalues = [];
         var count = 0;
@@ -202,101 +108,14 @@ $(document).ready(function() {
 
 
         for (var i = 0; i < data.length; i++) {
-          var countryfound = false;
-          var classfound = false;
-          var country = null;
-          var classitem = null;
-          var num = 0;
           for (var a = 0; a < countryvalues.length; a++) {
             if (data[i].country == countryvalues[a]) {
-              countryfound = true;
-              country = countryvalues[a];
-              itemselected.push(data[i]);
-              var objectsection = data[i].Division;
-              objectsection = objectsection.split(", ");
-              if (objectsection[0] == false) {
-                break;
-              }
-              var courtsquares = data[i].Court;//.match(numberPattern); // Court
-              courtsquares = courtsquares.split(", ");
-              if (classitem == null) {
-                classitem = data[i].class;
-              }
-              count++;
-              if (courtsquares[0]) {
-                courtsquares.forEach(function(square) {
-                  objectsection.forEach(function(section) {
-                    if (section !== "Gallery" && Number.isInteger(square)) {
-                      if (parseInt(square) >= 30) {
-                        $('#' + section + square).css({ fill: colordict[classitem]});
-                        query1selected.push(section + square);
-                      }
-                    } else if (section === "Gallery" && Number.isInteger(square) == false) {
-                      $('.' + gallerydict[square]).css({ fill: "pink"});
-                      query1selected.push(gallerydict[square]);
-                    } else if ((section === "A" || section === "B" || section === "C" || section === "D") && square === "Machine Arcade") {
-                      $('#machinearcade').css({ fill: "green" });
-                      query1selected.push('machinearcade');
-                      for (var index = 1; index < 30; index++) {
-                        $('#' + section + String(index)).css({ fill: colordict[classitem] });
-                        query1selected.push(section + String(index));
-                      }
-                    }
-                    else if (section !== "Gallery" && Number.isInteger(square) == false) {
-                      for (var index = 1; index < 30; index++) {
-                        $('#' + section + String(index)).css({ fill: colordict[classitem] });
-                        query1selected.push(section + String(index));
-                      }
-                    }
-                  });
-                });
-              }
+              colorMapItem(itemselected, data[i], query1selected, colordict, count);
             }
           }
           for (var b = 0; b < classvalues.length; b++) {
             if (data[i].class == classvalues[b]) {
-              classfound = true;
-              classitem = classvalues[b];
-              itemselected.push(data[i]);
-              var objectsection = data[i].Division;
-              objectsection = objectsection.split(", ");
-              if (objectsection[0] == false) {
-                break;
-              }
-              var courtsquares = data[i].Court;//.match(numberPattern); // Court
-              courtsquares = courtsquares.split(", ");
-              if (classitem == null) {
-                classitem = data[i].class;
-              }
-              count++;
-              if (courtsquares[0]) {
-                courtsquares.forEach(function(square) {
-                  objectsection.forEach(function(section) {
-                    if (section !== "Gallery" && Number.isInteger(square)) {
-                      if (parseInt(square) >= 30) {
-                        $('#' + section + square).css({ fill: colordict[classitem]});
-                        query1selected.push(section + square);
-                      }
-                    } else if (section === "Gallery" && Number.isInteger(square) == false) {
-                      $('.' + gallerydict[square]).css({ fill: "pink"});
-                      query1selected.push(gallerydict[square]);
-                    } else if ((section === "A" || section === "B" || section === "C" || section === "D") && square === "Machine Arcade") {
-                      $('#machinearcade').css({ fill: "green" });
-                      query1selected.push('machinearcade');
-                      for (var index = 1; index < 30; index++) {
-                        $('#' + section + String(index)).css({ fill: colordict[classitem] });
-                        query1selected.push(section + String(index));
-                      }
-                    }
-                    else if (section !== "Gallery" && Number.isInteger(square) == false) {
-                      for (var index = 1; index < 30; index++) {
-                        $('#' + section + String(index)).css({ fill: colordict[classitem] });
-                        query1selected.push(section + String(index));
-                      }
-                    }
-                  });
-                });
-              }
+              colorMapItem(itemselected, data[i], query1selected, colordict, count);
             }
           }
         }
@@ -305,9 +124,9 @@ $(document).ready(function() {
         dimdiv.innerHTML = 'The number of items: ' + count.toString();
         massqueries = query1selected;
         massqueries = massqueries.concat(query2selected);
-        console.log(query1selected);
-        console.log(query2selected);
-        console.log(massqueries);
+        //console.log(query1selected);
+        //console.log(query2selected);
+        //console.log(massqueries);
         for (var j = 0; j < countryelements.length; j++) {
           checkTransparentCountry(countryelements[j], massqueries, data, gallerydict);
         }
@@ -315,13 +134,10 @@ $(document).ready(function() {
 
 
       $('#countries2').on("change", { items: 'data' }, function(event) {
-        var objects = [];
         var countryelements = $('#countries2 option');
         var classelements = $('#itemclasses2 option');
-        //var countryitems = 0;
         query2selected = [];
         var itemselected = [];
-
         var countryvalues = [];
         var classvalues = [];
         var count = 0;
@@ -339,104 +155,14 @@ $(document).ready(function() {
         }
 
         for (var i = 0; i < data.length; i++) {
-          var countryfound = false;
-          var classfound = false;
-          var country = null;
-          var classitem = null;
-          var num = 0;
           for (var a = 0; a < countryvalues.length; a++) {
             if (data[i].country == countryvalues[a]) {
-              countryfound = true;
-              country = countryvalues[a];
-              itemselected.push(data[i]);
-              var objectsection = data[i].Division;
-              objectsection = objectsection.split(", ");
-              if (objectsection[0] == false) {
-                break;
-              }
-              var courtsquares = data[i].Court;//.match(numberPattern); // Court
-              courtsquares = courtsquares.split(", ");
-              if (classitem == null) {
-                classitem = data[i].class;
-              }
-              count++;
-              if (courtsquares[0]) {
-                courtsquares.forEach(function(square) {
-                  objectsection.forEach(function(section) {
-                    if (section !== "Gallery" && Number.isInteger(square)) {
-                      if (parseInt(square) >= 30) {
-                              $('#' + section + square).css({ fill: "maroon"});
-                              query2selected.push(section + square);
-                      }
-                    } else if (section === "Gallery" && Number.isInteger(square) == false) {
-                              $('.' + gallerydict[square]).css({ fill: "maroon"});
-                              query2selected.push(gallerydict[square]);
-
-                    } else if ((section === "A" || section === "B" || section === "C" || section === "D") && square === "Machine Arcade") {
-                      $('#machinearcade').css({ fill: "maroon" });
-                      query2selected.push('machinearcade');
-                      for (var index = 1; index < 30; index++) {
-                        
-                              $('#' + section + String(index)).css({ fill: "maroon"});
-                              query2selected.push(section + String(index));
-                      }
-                    }
-                    else if (section !== "Gallery" && Number.isInteger(square) == false) {
-                      for (var index = 1; index < 30; index++) {
-                        
-                              $('#' + section + String(index)).css({ fill: "maroon"});
-                              query2selected.push(section + String(index));
-                      }
-                    }
-                  });
-                });
-              }
+              colorMapItem(itemselected, data[i], query2selected, colordict, count);
             }
           }
           for (var b = 0; b < classvalues.length; b++) {
             if (data[i].class == classvalues[b]) {
-              classfound = true;
-              classitem = classvalues[b];
-              itemselected.push(data[i]);
-              var objectsection = data[i].Division;
-              objectsection = objectsection.split(", ");
-              if (objectsection[0] == false) {
-                break;
-              }
-              var courtsquares = data[i].Court;//.match(numberPattern); // Court
-              courtsquares = courtsquares.split(", ");
-              if (classitem == null) {
-                classitem = data[i].class;
-              }
-              count++;
-              if (courtsquares[0]) {
-                courtsquares.forEach(function(square) {
-                  objectsection.forEach(function(section) {
-                    if (section !== "Gallery" && Number.isInteger(square)) {
-                      if (parseInt(square) >= 30) {
-                        $('#' + section + square).css({ fill: "maroon"});
-                        query1selected.push(section + square);
-                      }
-                    } else if (section === "Gallery" && Number.isInteger(square) == false) {
-                      $('.' + gallerydict[square]).css({ fill: "maroon"});
-                      query1selected.push(gallerydict[square]);
-                    } else if ((section === "A" || section === "B" || section === "C" || section === "D") && square === "Machine Arcade") {
-                      $('#machinearcade').css({ fill: "maroon" });
-                      query2selected.push('machinearcade');
-                      for (var index = 1; index < 30; index++) {
-                        $('#' + section + String(index)).css({ fill: "maroon"});
-                        query2selected.push(section + String(index));
-                      }
-                    }
-                    else if (section !== "Gallery" && Number.isInteger(square) == false) {
-                      for (var index = 1; index < 30; index++) {
-                        $('#' + section + String(index)).css({ fill: "maroon"});
-                        query2selected.push(section + String(index));
-                      }
-                    }
-                  });
-                });
-              }
+              colorMapItem(itemselected, data[i], query2selected, colordict, count);
             }
           }
         }
@@ -445,16 +171,15 @@ $(document).ready(function() {
         dimdiv.innerHTML = 'The number of items: ' + count.toString();
         massqueries = query2selected;
         massqueries = massqueries.concat(query1selected);
-        console.log(query1selected);
-        console.log(query2selected);
-        console.log(massqueries);
+        //console.log(query1selected);
+        //console.log(query2selected);
+        //console.log(massqueries);
         for (var j = 0; j < countryelements.length; j++) {
           checkTransparentCountry(countryelements[j], massqueries, data, gallerydict);
         }
       });
 
       $('#itemclasses2').on("change", { items: 'data' }, function(event) {
-        var objects = [];
         var countryelements = $('#countries2 option');
         var classelements = $('#itemclasses2 option');
         //var countryitems = 0;
@@ -479,101 +204,14 @@ $(document).ready(function() {
 
 
         for (var i = 0; i < data.length; i++) {
-          var countryfound = false;
-          var classfound = false;
-          var country = null;
-          var classitem = null;
-          var num = 0;
           for (var a = 0; a < countryvalues.length; a++) {
             if (data[i].country == countryvalues[a]) {
-              countryfound = true;
-              country = countryvalues[a];
-              itemselected.push(data[i]);
-              var objectsection = data[i].Division;
-              objectsection = objectsection.split(", ");
-              if (objectsection[0] == false) {
-                break;
-              }
-              var courtsquares = data[i].Court;//.match(numberPattern); // Court
-              courtsquares = courtsquares.split(", ");
-              if (classitem == null) {
-                classitem = data[i].class;
-              }
-              count++;
-              if (courtsquares[0]) {
-                courtsquares.forEach(function(square) {
-                  objectsection.forEach(function(section) {
-                    if (section !== "Gallery" && Number.isInteger(square)) {
-                      if (parseInt(square) >= 30) {
-                        $('#' + section + square).css({ fill: colordict[classitem]});
-                        query2selected.push(section + square);
-                      }
-                    } else if (section === "Gallery" && Number.isInteger(square) == false) {
-                      $('.' + gallerydict[square]).css({ fill: "maroon"});
-                      query2selected.push(gallerydict[square]);
-                    } else if ((section === "A" || section === "B" || section === "C" || section === "D") && square === "Machine Arcade") {
-                      $('#machinearcade').css({ fill: "green" });
-                      query2selected.push('machinearcade');
-                      for (var index = 1; index < 30; index++) {
-                        $('#' + section + String(index)).css({ fill: colordict[classitem] });
-                        query2selected.push(section + String(index));
-                      }
-                    }
-                    else if (section !== "Gallery" && Number.isInteger(square) == false) {
-                      for (var index = 1; index < 30; index++) {
-                        $('#' + section + String(index)).css({ fill: colordict[classitem] });
-                        query2selected.push(section + String(index));
-                      }
-                    }
-                  });
-                });
-              }
+              colorMapItem(itemselected, data[i], query2selected, colordict, count);
             }
           }
           for (var b = 0; b < classvalues.length; b++) {
             if (data[i].class == classvalues[b]) {
-              classfound = true;
-              classitem = classvalues[b];
-              itemselected.push(data[i]);
-              var objectsection = data[i].Division;
-              objectsection = objectsection.split(", ");
-              if (objectsection[0] == false) {
-                break;
-              }
-              var courtsquares = data[i].Court;//.match(numberPattern); // Court
-              courtsquares = courtsquares.split(", ");
-              if (classitem == null) {
-                classitem = data[i].class;
-              }
-              count++;
-              if (courtsquares[0]) {
-                courtsquares.forEach(function(square) {
-                  objectsection.forEach(function(section) {
-                    if (section !== "Gallery" && Number.isInteger(square)) {
-                      if (parseInt(square) >= 30) {
-                        $('#' + section + square).css({ fill: colordict[classitem]});
-                        query2selected.push(section + square);
-                      }
-                    } else if (section === "Gallery" && Number.isInteger(square) == false) {
-                      $('.' + gallerydict[square]).css({ fill: "maroon"});
-                      query2selected.push(gallerydict[square]);
-                    } else if ((section === "A" || section === "B" || section === "C" || section === "D") && square === "Machine Arcade") {
-                      $('#machinearcade').css({ fill: "green" });
-                      query2selected.push('machinearcade');
-                      for (var index = 1; index < 30; index++) {
-                        $('#' + section + String(index)).css({ fill: colordict[classitem] });
-                        query2selected.push(section + String(index));
-                      }
-                    }
-                    else if (section !== "Gallery" && Number.isInteger(square) == false) {
-                      for (var index = 1; index < 30; index++) {
-                        $('#' + section + String(index)).css({ fill: colordict[classitem] });
-                        query2selected.push(section + String(index));
-                      }
-                    }
-                  });
-                });
-              }
+              colorMapItem(itemselected, data[i], query2selected, colordict, count);
             }
           }
         }
@@ -582,9 +220,9 @@ $(document).ready(function() {
         dimdiv.innerHTML = 'The number of items: ' + count.toString();
         massqueries = query2selected;
         massqueries = massqueries.concat(query1selected);
-        console.log(query1selected);
-        console.log(query2selected);
-        console.log(massqueries);
+        //console.log(query1selected);
+        //console.log(query2selected);
+        //console.log(massqueries);
         for (var j = 0; j < countryelements.length; j++) {
           checkTransparentCountry(countryelements[j], massqueries, data, gallerydict);
         }
@@ -592,7 +230,58 @@ $(document).ready(function() {
     });
 	});
 
-
+function colorMapItem(itemselected, dataitem, queryselected, colordict, count) {
+  itemselected.push(dataitem);
+  var objectsection = dataitem.Division;
+  objectsection = objectsection.split(", ");
+  if (objectsection[0] == false) {
+    return;
+    // meaning that this item is not an actual item in the dataset, and we've reached the end,
+    // since we can't place an item without knowing if it's even on the 1st or 2nd floor
+  }
+  var itemclass = dataitem.class;
+  var courtsquares = dataitem.Court;
+  courtsquares = courtsquares.split(", ");
+  count++;
+  if (courtsquares[0]) {
+    courtsquares.forEach(function(square) {
+      objectsection.forEach(function(section) {
+        //console.log(section);
+        //console.log(square);
+        //sconsole.log(parseInt(square));
+        if (section !== "Gallery" && Number.isInteger(parseInt(square))) {
+          // if the section is not on the 2nd floor and has a number attached to it, such as A1 or whatever
+          //console.log(parseInt(square));
+          if (parseInt(square) < 30) {
+            $('#' + section + square).css({ fill: colordict[itemclass]})
+            //$('#' + section + square).css({ fill: "pink"});
+            queryselected.push(section + square);
+          } else {
+            // just color the whole section
+            for (var index = 1; index < 30; index++) {
+              $('#' + section + String(index)).css({ fill: colordict[itemclass]});
+              //$('#' + section + String(index)).css({ fill: "pink"});
+              queryselected.push(section + String(index));
+            }
+          }
+        } else if (section === "Gallery" && Number.isInteger(parseInt(square)) == false) {
+          $('.' + gallerydict[square]).css({ fill: colordict[itemclass]});
+          //$('.' + gallerydict[square]).css({ fill: "pink"});
+          queryselected.push(gallerydict[square]);
+        } else if (square === "Machine Arcade") {
+          $('#machinearcade').css({ fill: "pink" });
+          queryselected.push('machinearcade');
+        } else if ((section === "A" || section === "B" || section === "C" || section === "D") && Number.isInteger(parseInt(square)) == false) {
+          for (var index = 1; index < 30; index++) {
+            $('#' + section + String(index)).css({ fill: colordict[itemclass]});
+            //$('#' + section + String(index)).css({ fill: "pink"});
+            queryselected.push(section + String(index));
+          }
+        }
+      });
+    });
+  }
+}
 
 
 
@@ -679,8 +368,7 @@ function populateCountries() {
 	}
 }
 
-function filltooltipArray(data)
-{
+function filldataArray(data) {
 	var datadict = {};
 	var sections = ["A", "B", "C", "D"];
   	for (var i = 0; i < 4; i++)
@@ -713,10 +401,10 @@ function filltooltipArray(data)
 	return datadict;
 }
 
+
 function checkTransparentCountry(optionelement, queryselected, data, gallerydict) {
   if (optionelement.selected == false) {
-  //if (countryelements[j].selected == false) {
-    var country = optionelement.value;//countryelements[j].value;
+    var country = optionelement.value;
     for (var k = 0; k < data.length; k++) {
       if (data[k].country == country) {
         var objectsection = data[k].Division;
@@ -731,29 +419,30 @@ function checkTransparentCountry(optionelement, queryselected, data, gallerydict
           courtsquares.forEach(function(square) {
             objectsection.forEach(function(section) {
               if (section !== "Gallery" && Number.isInteger(square)) {
-                if (parseInt(square) >= 30) {
-                  if (queryselected.indexOf(objectsection + d) < 0) {
+                if (parseInt(square) < 30) {
+                  if (queryselected.indexOf(section + square) < 0) {
                     $('#' + section + square).css({ fill: "transparent" });
+                  }
+                } else {
+                  // just color the whole section
+                  for (var index = 1; index < 30; index++) {
+                    if (queryselected.indexOf(section + String(index)) < 0) {
+                      $('#' + section + String(index)).css({ fill: "transparent"});
+                    }
                   }
                 }
               } else if (section === "Gallery" && Number.isInteger(square) == false) {
                 if (queryselected.indexOf(gallerydict[square]) < 0) {
-                  $('.' + gallerydict[square]).css({ fill: "transparent"});                
+                  $('.' + gallerydict[square]).css({ fill: "transparent"});  
                 }
-              } else if ((section === "A" || section === "B" || section === "C" || section === "D") && square === "Machine Arcade") {
-                if (queryselected.indexOf(machinearcade) < 0) {
+              } else if (square === "Machine Arcade") {
+                if (queryselected.indexOf('machinearcade') < 0) {
                   $('#machinearcade').css({ fill: "transparent" });
                 }
+              } else if ((section === "A" || section === "B" || section === "C" || section === "D") && Number.isInteger(square) == false) {
                 for (var index = 1; index < 30; index++) {
                   if (queryselected.indexOf(section + String(index)) < 0) {
-                    $('#' + section + String(index)).css({ fill: "transparent" });
-                  }
-                }
-              }
-              else if (section !== "Gallery" && Number.isInteger(square) == false) {
-                for (var index = 1; index < 30; index++) {
-                  if (queryselected.indexOf(section + String(index)) < 0) {
-                    $('#' + section + String(index)).css({ fill: "transparent" });
+                    $('#' + section + String(index)).css({ fill: "transparent"});
                   }
                 }
               }
@@ -820,7 +509,6 @@ function checkTransparentClass(optionelement, queryselected, data, gallerydict) 
 function displayResults(dataitems, query) {
   $("#resultstable" + query.toString() + " tr").remove();
   document.getElementById('resultstable' + query.toString()).innerHTML = "";
-  //console.log(document.getElementById('resultstable').innerHTML);
   var tablediv = document.getElementById('resultstable' + query.toString());
   var tablestring = "<tr><th>Class</th><th>Description</th><th>Name</th><th>Place</th></tr>";
   for (var i = 0; i < dataitems.length; i++) {
@@ -860,36 +548,25 @@ function colorMixer(rgb1,rgb2) {
   return [Math.round(r),Math.round(g),Math.round(b)];
 }
 
-function openCity(evt, cityName) {
-  console.log('here1!');
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinks");
-    //for (i = 0; i < tablinks.length; i++) {
-    //    tablinks[i].className = tablinks[i].className.replace(" active", "");
-    //}
-    //document.getElementById(cityName).style.display = "block";
-    //evt.currentTarget.className += " active";
-
-
-
-    var x = document.getElementById(cityName);
-    if (x.style.display === 'none') {
-        x.style.display = 'block';
-    } else {
-        x.style.display = 'none';
-    }
-    if (cityName === 'query1') {
-      var y = document.getElementById('query2');
-      y.style.display = 'none';
-    } else if (cityName == 'query2') {
-      var y = document.getElementById('query1');
-      y.style.display = 'none';
-    }
-
-
-
+function openQueryTable(evt, queryName) {
+  //console.log('here1!');
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  var x = document.getElementById(queryName);
+  if (x.style.display === 'none') {
+      x.style.display = 'block';
+  } else {
+      x.style.display = 'none';
+  }
+  if (queryName === 'query1') {
+    var y = document.getElementById('query2');
+    y.style.display = 'none';
+  } else if (queryName == 'query2') {
+    var y = document.getElementById('query1');
+    y.style.display = 'none';
+  }
 }
