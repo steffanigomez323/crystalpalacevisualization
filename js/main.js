@@ -60,28 +60,37 @@ $(document).ready(function() {
       }
       for (var i = 0; i < data.length; i++) {
         // have to check if the item's country corresponds with any of the countries selected
+        var countryfound = false;
+        var classfound = false;
         for (var a = 0; a < countryvalues.length; a++) {
           if (data[i].country == countryvalues[a]) {
             colorMapItem(itemselected, data[i], query1selected, colordict, count);
+            countryfound = true;
           }
+        }
+        if (countryfound == false) {
+          // then the data item is not in any of the countries selected and we can make sure that its color mapping
+          // is transparent
+          massqueries = query1selected;
+          massqueries = massqueries.concat(query2selected);
+          transparentMapItem(data[i], massqueries);
         }
         for (var b = 0; b < classvalues.length; b++) {
           if (data[i].class == classvalues[b]) {
             colorMapItem(itemselected, data[i], query1selected, colordict, count);
+            classfound = true;
           }
+        }
+        if (classfound == false) {
+          // then the data item's class is not in any of the classes selected and we can make sure it's transparent
+          massqueries = query1selected;
+          massqueries = massqueries.concat(query2selected);
+          transparentMapItem(data[i], massqueries);
         }
       }
       displayResults(itemselected, 1);
 			var dimdiv = document.getElementById('dimensionality1');
 			dimdiv.innerHTML = 'The number of items: ' + count.toString();
-      massqueries = query1selected;
-      massqueries = massqueries.concat(query2selected);
-      //console.log(query1selected);
-      //console.log(query2selected);
-      //console.log(massqueries);
-			for (var j = 0; j < countryelements.length; j++) {
-        checkTransparentCountry(countryelements[j], massqueries, data, gallerydict);
-  		}
 	   });
 
   
@@ -108,28 +117,34 @@ $(document).ready(function() {
 
 
         for (var i = 0; i < data.length; i++) {
+          var classfound = false;
+          var countryfound = false;
           for (var a = 0; a < countryvalues.length; a++) {
             if (data[i].country == countryvalues[a]) {
               colorMapItem(itemselected, data[i], query1selected, colordict, count);
+              countryfound = true;
             }
+          }
+          if (countryfound == false) {
+            massqueries = query1selected;
+            massqueries = massqueries.concat(query2selected);
+            transparentMapItem(data[i], massqueries);
           }
           for (var b = 0; b < classvalues.length; b++) {
             if (data[i].class == classvalues[b]) {
               colorMapItem(itemselected, data[i], query1selected, colordict, count);
+              classfound = true;
             }
+          }
+          if (classfound == false) {
+            massqueries = query1selected;
+            massqueries = massqueries.concat(query2selected);
+            transparentMapItem(data[i], massqueries);
           }
         }
         displayResults(itemselected, 1);
         var dimdiv = document.getElementById('dimensionality1');
         dimdiv.innerHTML = 'The number of items: ' + count.toString();
-        massqueries = query1selected;
-        massqueries = massqueries.concat(query2selected);
-        //console.log(query1selected);
-        //console.log(query2selected);
-        //console.log(massqueries);
-        for (var j = 0; j < countryelements.length; j++) {
-          checkTransparentCountry(countryelements[j], massqueries, data, gallerydict);
-        }
       });
 
 
@@ -155,28 +170,34 @@ $(document).ready(function() {
         }
 
         for (var i = 0; i < data.length; i++) {
+          var countryfound = false;
+          var classfound = false;
           for (var a = 0; a < countryvalues.length; a++) {
             if (data[i].country == countryvalues[a]) {
               colorMapItem(itemselected, data[i], query2selected, colordict, count);
+              countryfound = true;
             }
+          }
+          if (countryfound == false) {
+            massqueries = query2selected;
+            massqueries = massqueries.concat(query1selected);
+            transparentMapItem(data[i], massqueries);
           }
           for (var b = 0; b < classvalues.length; b++) {
             if (data[i].class == classvalues[b]) {
               colorMapItem(itemselected, data[i], query2selected, colordict, count);
+              classfound = true;
             }
+          }
+          if (classfound == false) {
+            massqueries = query2selected;
+            massqueries = massqueries.concat(query1selected);
+            transparentMapItem(data[i], massqueries);
           }
         }
         displayResults(itemselected, 2);
         var dimdiv = document.getElementById('dimensionality2');
         dimdiv.innerHTML = 'The number of items: ' + count.toString();
-        massqueries = query2selected;
-        massqueries = massqueries.concat(query1selected);
-        //console.log(query1selected);
-        //console.log(query2selected);
-        //console.log(massqueries);
-        for (var j = 0; j < countryelements.length; j++) {
-          checkTransparentCountry(countryelements[j], massqueries, data, gallerydict);
-        }
       });
 
       $('#itemclasses2').on("change", { items: 'data' }, function(event) {
@@ -204,28 +225,34 @@ $(document).ready(function() {
 
 
         for (var i = 0; i < data.length; i++) {
+          var countryfound = false;
+          var classfound = false;
           for (var a = 0; a < countryvalues.length; a++) {
             if (data[i].country == countryvalues[a]) {
               colorMapItem(itemselected, data[i], query2selected, colordict, count);
+              countryfound = true;
             }
+          }
+          if (countryfound == false) {
+            massqueries = query2selected;
+            massqueries = massqueries.concat(query1selected);
+            transparentMapItem(data[i], massqueries);
           }
           for (var b = 0; b < classvalues.length; b++) {
             if (data[i].class == classvalues[b]) {
               colorMapItem(itemselected, data[i], query2selected, colordict, count);
+              classfound = true;
             }
+          }
+          if (classfound == false) {
+            massqueries = query2selected;
+            massqueries = massqueries.concat(query1selected);
+            transparentMapItem(data[i], massqueries);
           }
         }
         displayResults(itemselected, 2);
         var dimdiv = document.getElementById('dimensionality2');
         dimdiv.innerHTML = 'The number of items: ' + count.toString();
-        massqueries = query2selected;
-        massqueries = massqueries.concat(query1selected);
-        //console.log(query1selected);
-        //console.log(query2selected);
-        //console.log(massqueries);
-        for (var j = 0; j < countryelements.length; j++) {
-          checkTransparentCountry(countryelements[j], massqueries, data, gallerydict);
-        }
       });
     });
 	});
@@ -246,12 +273,8 @@ function colorMapItem(itemselected, dataitem, queryselected, colordict, count) {
   if (courtsquares[0]) {
     courtsquares.forEach(function(square) {
       objectsection.forEach(function(section) {
-        //console.log(section);
-        //console.log(square);
-        //sconsole.log(parseInt(square));
         if (section !== "Gallery" && Number.isInteger(parseInt(square))) {
           // if the section is not on the 2nd floor and has a number attached to it, such as A1 or whatever
-          //console.log(parseInt(square));
           if (parseInt(square) < 30) {
             $('#' + section + square).css({ fill: colordict[itemclass]})
             //$('#' + section + square).css({ fill: "pink"});
@@ -276,6 +299,51 @@ function colorMapItem(itemselected, dataitem, queryselected, colordict, count) {
             $('#' + section + String(index)).css({ fill: colordict[itemclass]});
             //$('#' + section + String(index)).css({ fill: "pink"});
             queryselected.push(section + String(index));
+          }
+        }
+      });
+    });
+  }
+}
+
+function transparentMapItem(dataitem, queryselected) {
+  var objectsection = dataitem.Division;
+  objectsection = objectsection.split(", ");
+  if (objectsection[0] == false) {
+    return;
+  }
+  var courtsquares = dataitem.Court;
+  courtsquares = courtsquares.split(", ");
+  var classitems = dataitem.class;
+  if (courtsquares[0]) {
+    courtsquares.forEach(function(square) {
+      objectsection.forEach(function(section) {
+        if (section !== "Gallery" && Number.isInteger(square)) {
+          if (parseInt(square) < 30) {
+            if (queryselected.indexOf(section + square) < 0) {
+              $('#' + section + square).css({ fill: "transparent" });
+            }
+          } else {
+            // just color the whole section
+            for (var index = 1; index < 30; index++) {
+              if (queryselected.indexOf(section + String(index)) < 0) {
+                $('#' + section + String(index)).css({ fill: "transparent"});
+              }
+            }
+          }
+        } else if (section === "Gallery" && Number.isInteger(square) == false) {
+          if (queryselected.indexOf(gallerydict[square]) < 0) {
+            $('.' + gallerydict[square]).css({ fill: "transparent"});  
+          }
+        } else if (square === "Machine Arcade") {
+          if (queryselected.indexOf('machinearcade') < 0) {
+            $('#machinearcade').css({ fill: "transparent" });
+          }
+        } else if ((section === "A" || section === "B" || section === "C" || section === "D") && Number.isInteger(square) == false) {
+          for (var index = 1; index < 30; index++) {
+            if (queryselected.indexOf(section + String(index)) < 0) {
+              $('#' + section + String(index)).css({ fill: "transparent"});
+            }
           }
         }
       });
@@ -399,111 +467,6 @@ function filldataArray(data) {
   		}
   	});
 	return datadict;
-}
-
-
-function checkTransparentCountry(optionelement, queryselected, data, gallerydict) {
-  if (optionelement.selected == false) {
-    var country = optionelement.value;
-    for (var k = 0; k < data.length; k++) {
-      if (data[k].country == country) {
-        var objectsection = data[k].Division;
-        objectsection = objectsection.split(", ");
-        if (objectsection[0] == false) {
-          break;
-        }
-        var courtsquares = data[k].Court;
-        courtsquares = courtsquares.split(", ");
-        var classitems = data[k].class;
-        if (courtsquares[0]) {
-          courtsquares.forEach(function(square) {
-            objectsection.forEach(function(section) {
-              if (section !== "Gallery" && Number.isInteger(square)) {
-                if (parseInt(square) < 30) {
-                  if (queryselected.indexOf(section + square) < 0) {
-                    $('#' + section + square).css({ fill: "transparent" });
-                  }
-                } else {
-                  // just color the whole section
-                  for (var index = 1; index < 30; index++) {
-                    if (queryselected.indexOf(section + String(index)) < 0) {
-                      $('#' + section + String(index)).css({ fill: "transparent"});
-                    }
-                  }
-                }
-              } else if (section === "Gallery" && Number.isInteger(square) == false) {
-                if (queryselected.indexOf(gallerydict[square]) < 0) {
-                  $('.' + gallerydict[square]).css({ fill: "transparent"});  
-                }
-              } else if (square === "Machine Arcade") {
-                if (queryselected.indexOf('machinearcade') < 0) {
-                  $('#machinearcade').css({ fill: "transparent" });
-                }
-              } else if ((section === "A" || section === "B" || section === "C" || section === "D") && Number.isInteger(square) == false) {
-                for (var index = 1; index < 30; index++) {
-                  if (queryselected.indexOf(section + String(index)) < 0) {
-                    $('#' + section + String(index)).css({ fill: "transparent"});
-                  }
-                }
-              }
-            });
-          });
-        }
-      }
-    }  
-  }
-}
-
-function checkTransparentClass(optionelement, queryselected, data, gallerydict) {
-  if (optionelement.selected == false) {
-  //if (countryelements[j].selected == false) {
-    var classselected = optionelement.value;//countryelements[j].value;
-    for (var k = 0; k < data.length; k++) {
-      if (data[k].class == classselected) {
-        var objectsection = data[k].Division;
-        objectsection = objectsection.split(", ");
-        if (objectsection[0] == false) {
-          break;
-        }
-        var courtsquares = data[k].Court;
-        courtsquares = courtsquares.split(", ");
-        var classitems = data[k].class;
-        if (courtsquares[0]) {
-          courtsquares.forEach(function(square) {
-            objectsection.forEach(function(section) {
-              if (section !== "Gallery" && Number.isInteger(square)) {
-                if (parseInt(square) >= 30) {
-                  if (queryselected.indexOf(objectsection + d) < 0) {
-                    $('#' + section + square).css({ fill: "transparent" });
-                  }
-                }
-              } else if (section === "Gallery" && Number.isInteger(square) == false) {
-                if (queryselected.indexOf(gallerydict[square]) < 0) {
-                  $('.' + gallerydict[square]).css({ fill: "transparent"});                
-                }
-              } else if ((section === "A" || section === "B" || section === "C" || section === "D") && square === "Machine Arcade") {
-                if (queryselected.indexOf(machinearcade) < 0) {
-                  $('#machinearcade').css({ fill: "transparent" });
-                }
-                for (var index = 1; index < 30; index++) {
-                  if (queryselected.indexOf(section + String(index)) < 0) {
-                    $('#' + section + String(index)).css({ fill: "transparent" });
-                  }
-                }
-              }
-              else if (section !== "Gallery" && Number.isInteger(square) == false) {
-                for (var index = 1; index < 30; index++) {
-                  if (queryselected.indexOf(section + String(index)) < 0) {
-                    $('#' + section + String(index)).css({ fill: "transparent" });
-                  }
-                }
-              }
-            });
-          });
-        }
-      }
-    }  
-  }
 }
 
 function displayResults(dataitems, query) {
