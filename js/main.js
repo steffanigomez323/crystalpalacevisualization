@@ -64,7 +64,7 @@ $(document).ready(function() {
         var classfound = false;
         for (var a = 0; a < countryvalues.length; a++) {
           if (data[i].country == countryvalues[a]) {
-            colorMapItem(itemselected, data[i], query1selected, colordict, count);
+            count = colorMapItem(itemselected, data[i], query1selected, colordict, count);
             countryfound = true;
           }
         }
@@ -77,7 +77,7 @@ $(document).ready(function() {
         }
         for (var b = 0; b < classvalues.length; b++) {
           if (data[i].class == classvalues[b]) {
-            colorMapItem(itemselected, data[i], query1selected, colordict, count);
+            count = colorMapItem(itemselected, data[i], query1selected, colordict, count);
             classfound = true;
           }
         }
@@ -88,7 +88,7 @@ $(document).ready(function() {
           transparentMapItem(data[i], massqueries);
         }
       }
-      displayResults(itemselected, 1);
+      displayResults(itemselected, 1, count);
 			var dimdiv = document.getElementById('dimensionality1');
 			dimdiv.innerHTML = 'The number of items: ' + count.toString();
 	   });
@@ -121,7 +121,7 @@ $(document).ready(function() {
           var countryfound = false;
           for (var a = 0; a < countryvalues.length; a++) {
             if (data[i].country == countryvalues[a]) {
-              colorMapItem(itemselected, data[i], query1selected, colordict, count);
+              count = colorMapItem(itemselected, data[i], query1selected, colordict, count);
               countryfound = true;
             }
           }
@@ -132,7 +132,7 @@ $(document).ready(function() {
           }
           for (var b = 0; b < classvalues.length; b++) {
             if (data[i].class == classvalues[b]) {
-              colorMapItem(itemselected, data[i], query1selected, colordict, count);
+              count = colorMapItem(itemselected, data[i], query1selected, colordict, count);
               classfound = true;
             }
           }
@@ -142,7 +142,7 @@ $(document).ready(function() {
             transparentMapItem(data[i], massqueries);
           }
         }
-        displayResults(itemselected, 1);
+        displayResults(itemselected, 1, count);
         var dimdiv = document.getElementById('dimensionality1');
         dimdiv.innerHTML = 'The number of items: ' + count.toString();
       });
@@ -174,7 +174,7 @@ $(document).ready(function() {
           var classfound = false;
           for (var a = 0; a < countryvalues.length; a++) {
             if (data[i].country == countryvalues[a]) {
-              colorMapItem(itemselected, data[i], query2selected, colordict, count);
+              count = colorMapItem(itemselected, data[i], query2selected, colordict, count);
               countryfound = true;
             }
           }
@@ -185,7 +185,7 @@ $(document).ready(function() {
           }
           for (var b = 0; b < classvalues.length; b++) {
             if (data[i].class == classvalues[b]) {
-              colorMapItem(itemselected, data[i], query2selected, colordict, count);
+              count = colorMapItem(itemselected, data[i], query2selected, colordict, count);
               classfound = true;
             }
           }
@@ -195,7 +195,7 @@ $(document).ready(function() {
             transparentMapItem(data[i], massqueries);
           }
         }
-        displayResults(itemselected, 2);
+        displayResults(itemselected, 2, count);
         var dimdiv = document.getElementById('dimensionality2');
         dimdiv.innerHTML = 'The number of items: ' + count.toString();
       });
@@ -229,7 +229,7 @@ $(document).ready(function() {
           var classfound = false;
           for (var a = 0; a < countryvalues.length; a++) {
             if (data[i].country == countryvalues[a]) {
-              colorMapItem(itemselected, data[i], query2selected, colordict, count);
+              count = colorMapItem(itemselected, data[i], query2selected, colordict, count);
               countryfound = true;
             }
           }
@@ -240,7 +240,7 @@ $(document).ready(function() {
           }
           for (var b = 0; b < classvalues.length; b++) {
             if (data[i].class == classvalues[b]) {
-              colorMapItem(itemselected, data[i], query2selected, colordict, count);
+              count = colorMapItem(itemselected, data[i], query2selected, colordict, count);
               classfound = true;
             }
           }
@@ -250,7 +250,7 @@ $(document).ready(function() {
             transparentMapItem(data[i], massqueries);
           }
         }
-        displayResults(itemselected, 2);
+        displayResults(itemselected, 2, count);
         var dimdiv = document.getElementById('dimensionality2');
         dimdiv.innerHTML = 'The number of items: ' + count.toString();
       });
@@ -262,7 +262,7 @@ function colorMapItem(itemselected, dataitem, queryselected, colordict, count) {
   var objectsection = dataitem.Division;
   objectsection = objectsection.split(", ");
   if (objectsection[0] == false) {
-    return;
+    return count;
     // meaning that this item is not an actual item in the dataset, and we've reached the end,
     // since we can't place an item without knowing if it's even on the 1st or 2nd floor
   }
@@ -304,6 +304,7 @@ function colorMapItem(itemselected, dataitem, queryselected, colordict, count) {
       });
     });
   }
+  return count;
 }
 
 function transparentMapItem(dataitem, queryselected) {
@@ -451,14 +452,10 @@ function filldataArray(data) {
   		var objectsection = d.Division;
   		var numberPattern = /\d+/g;
 		  var squares = d.Court.match(numberPattern);
-      //console.log(d);
-      //console.log(squares);
   		if (d.Court === "Machine Arcade") {
   			datadict[d.Court].push(d);
   		} else if (squares != null) {
   			 squares.forEach(function(section) {
-          //console.log(datadict);
-          //console.log(objectsection+section);
           // what is this business of 2009???
           if (parseInt(section) <= 30) {
   				  datadict[objectsection + section].push(d);
@@ -469,7 +466,7 @@ function filldataArray(data) {
 	return datadict;
 }
 
-function displayResults(dataitems, query) {
+function displayResults(dataitems, query, count) {
   $("#resultstable" + query.toString() + " tr").remove();
   document.getElementById('resultstable' + query.toString()).innerHTML = "";
   var tablediv = document.getElementById('resultstable' + query.toString());
@@ -482,6 +479,9 @@ function displayResults(dataitems, query) {
   }
   document.getElementById('results' + query.toString()).style.height = "200px";
   tablediv.innerHTML = tablestring;
+  if (count > 0) {
+    $('#query'+query.toString()+'button').trigger( "click" );
+  }
 }
 
 function ColorLuminance(hex, lum) {
@@ -512,7 +512,6 @@ function colorMixer(rgb1,rgb2) {
 }
 
 function openQueryTable(evt, queryName) {
-  //console.log('here1!');
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
   for (i = 0; i < tabcontent.length; i++) {
