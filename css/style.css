@@ -11,10 +11,6 @@ td {
 	width: 25%;
 }
 
-select[multiple]:focus option:checked {
-  background: gray;
-}
-
 #queries {
 	position: relative;
 	display: inline-block;

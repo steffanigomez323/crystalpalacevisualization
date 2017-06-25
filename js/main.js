@@ -50,7 +50,13 @@ $(document).ready(function() {
       var count = 0;
       for (var a = 0; a < countryelements.length; a++) {
         if (countryelements[a].selected == true) {
+          if (countryelements[a].text[0] != "\u2713") {
+            var countrytext = countryelements[a].text;
+            countryelements[a].text = "\u2713" + " " + countrytext;
+          }
           countryvalues.push(countryelements[a].value);
+        } else if (countryelements[a].selected == false && countryelements[a].text[0] == "\u2713") {
+          countryelements[a].text = countryelements[a].text.substring(2, countryelements[a].text.length);
         }
       }
       for (var b = 0; b < classelements.length; b++) {
@@ -111,7 +117,13 @@ $(document).ready(function() {
 
         for (var b = 0; b < classelements.length; b++) {
           if (classelements[b].selected == true) {
+            if (classelements[b].text[0] != "\u2713") {
+              var classtext = classelements[b].text;
+              classelements[b].text = "\u2713" + " " + classtext;
+            }
             classvalues.push(classelements[b].value);
+          } else if (classelements[b].selected == false && classelements[b].text[0] == "\u2713") {
+            classelements[b].text = classelements[b].text.substring(2, classelements[b].text.length);
           }
         }
 
@@ -159,7 +171,13 @@ $(document).ready(function() {
 
         for (var a = 0; a < countryelements.length; a++) {
           if (countryelements[a].selected == true) {
+            if (countryelements[a].text[0] != "\u2713") {
+              var countrytext = countryelements[a].text;
+              countryelements[a].text = "\u2713" + " " + countrytext;
+            }
             countryvalues.push(countryelements[a].value);
+          } else if (countryelements[a].selected == false && countryelements[a].text[0] == "\u2713") {
+            countryelements[a].text = countryelements[a].text.substring(2, countryelements[a].text.length);
           }
         }
 
@@ -219,7 +237,13 @@ $(document).ready(function() {
 
         for (var b = 0; b < classelements.length; b++) {
           if (classelements[b].selected == true) {
+            if (classelements[b].text[0] != "\u2713") {
+              var classtext = classelements[b].text;
+              classelements[b].text = "\u2713" + " " + classtext;
+            }
             classvalues.push(classelements[b].value);
+          } else if (classelements[b].selected == false && classelements[b].text[0] == "\u2713") {
+            classelements[b].text = classelements[b].text.substring(2, classelements[b].text.length);
           }
         }
 
@@ -426,10 +450,10 @@ function populateCountries() {
 		"Holland", "Italy", "Newfoundland", "Switzerland", "Swedish-Norway"]
 	for (var i = 0; i < countries.length; i++)
 	{
-		$('#countries').append($('<option>', {
-    		value: countries[i],
-    		text: countries[i]
-		}));
+		// $('#countries').append($('<option>', {
+  //   		value: countries[i],
+  //   		text: countries[i]
+		// }));
     $('#countries2').append($('<option>', {
         value: countries[i],
         text: countries[i]
