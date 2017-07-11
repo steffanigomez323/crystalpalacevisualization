@@ -137,7 +137,8 @@ function buildfloorplan(data, datadict) {
  	    	.attr("x", A1x + (squarewidth / 2) - 10)
  	    	.attr("y", A1y + (squareheight / 2))
  	    	.attr("dy", ".30em")
- 	    	.text("A" + i);
+ 	    	.text("A" + i)
+ 	    	.attr("font-size", "11");
  		A1x -= squarewidth;
  	}
  	A1y -= squareheight;
@@ -157,7 +158,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", A1x + (squarewidth / 2) - 10)
 	    	.attr("y", A1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("A" + i);
+	    	.text("A" + i)
+	    	.attr("font-size", "11");
 		A1x -= squarewidth;
 	}
 	A1y -= squareheight;
@@ -177,7 +179,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", A1x + (squarewidth / 2) - 10)
 	    	.attr("y", A1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("A" + i);
+	    	.text("A" + i)
+	    	.attr("font-size", "11");
 		A1x -= squarewidth;
 	}
 	var triangle = firstsvg.append('polygon')
@@ -190,7 +193,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", A1x + (squarewidth / 2) - 10)
 	    	.attr("y", A1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("A" + i);
+	    	.text("A" + i)
+	    	.attr("font-size", "11");
 	A1y -= squareheight;
 	A1x = Aoriginalx + squarewidth;
 	for (var i = 18; i < 22; i++)
@@ -208,7 +212,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", A1x + (squarewidth / 2) - 10)
 	    	.attr("y", A1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("A" + i);
+	    	.text("A" + i)
+	    	.attr("font-size", "11");
 		A1x -= squarewidth;
 	}
 	var triangle = firstsvg.append('polygon')
@@ -221,7 +226,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", A1x + (squarewidth / 2) - 10)
 	    	.attr("y", A1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("A" + i);
+	    	.text("A" + i)
+	    	.attr("font-size", "11");
 	A1y -= squareheight;
 	A1x = Aoriginalx + squarewidth;
 	for (var i = 23; i < 26; i++)
@@ -239,7 +245,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", A1x + (squarewidth / 2) - 10)
 	    	.attr("y", A1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("A" + i);
+	    	.text("A" + i)
+	    	.attr("font-size", "11");
 		A1x -= squarewidth;
 	}
 	var triangle = firstsvg.append('polygon')
@@ -252,7 +259,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", A1x + (squarewidth / 2) - 10)
 	    	.attr("y", A1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("A" + i);
+	    	.text("A" + i)
+	    	.attr("font-size", "11");
 	A1y -= squareheight;
 	A1x = Aoriginalx + squarewidth;
 	for (var i = 27; i < 29; i++)
@@ -270,7 +278,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", A1x + (squarewidth / 2) - 10)
 	    	.attr("y", A1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("A" + i);
+	    	.text("A" + i)
+	    	.attr("font-size", "11");
 		A1x -= squarewidth;
 	}
 	var triangle = firstsvg.append('polygon')
@@ -283,7 +292,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", A1x + (squarewidth / 2) - 10)
 	    	.attr("y", A1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("A" + i);
+	    	.text("A" + i)
+	    	.attr("font-size", "11");
 
 	// starting on section B
 	var Boriginalx = scalespixels(700, 429, 350);
@@ -304,7 +314,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", B1x + (squarewidth / 2) - 10)
 	    	.attr("y", B1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("B" + i);
+	    	.text("B" + i)
+	    	.attr("font-size", "11");
 		B1x += squarewidth;
 	}
 	B1y -= squareheight;
@@ -324,7 +335,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", B1x + (squarewidth / 2) - 10)
 	    	.attr("y", B1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("B" + i);
+	    	.text("B" + i)
+	    	.attr("font-size", "11");
 		B1x += squarewidth;
 	}
 	B1y -= squareheight;
@@ -344,7 +356,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", B1x + (squarewidth / 2) - 10)
 	    	.attr("y", B1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("B" + i);
+	    	.text("B" + i)
+	    	.attr("font-size", "11");
 		B1x += squarewidth;
 	}
 	var triangle = firstsvg.append('polygon')
@@ -357,7 +370,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", B1x + (squarewidth / 2) - 10)
 	    	.attr("y", B1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("B" + i);
+	    	.text("B" + i)
+	    	.attr("font-size", "11");
 	B1y -= squareheight;
 	B1x = Boriginalx - squarewidth;
 	for (var i = 18; i < 22; i++)
@@ -375,7 +389,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", B1x + (squarewidth / 2) - 10)
 	    	.attr("y", B1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("B" + i);
+	    	.text("B" + i)
+	    	.attr("font-size", "11");
 		B1x += squarewidth;
 	}
 	var triangle = firstsvg.append('polygon')
@@ -388,7 +403,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", B1x + (squarewidth / 2) - 10)
 	    	.attr("y", B1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("B" + i);
+	    	.text("B" + i)
+	    	.attr("font-size", "11");
 	B1y -= squareheight;
 	B1x = Boriginalx - squarewidth;
 	for (var i = 23; i < 26; i++)
@@ -406,7 +422,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", B1x + (squarewidth / 2) - 10)
 	    	.attr("y", B1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("B" + i);
+	    	.text("B" + i)
+	    	.attr("font-size", "11");
 		B1x += squarewidth;
 	}
 	var triangle = firstsvg.append('polygon')
@@ -419,7 +436,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", B1x + (squarewidth / 2) - 10)
 	    	.attr("y", B1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("B" + i);
+	    	.text("B" + i)
+	    	.attr("font-size", "11");
 	B1y -= squareheight;
 	B1x = Boriginalx - squarewidth;
 	for (var i = 27; i < 29; i++)
@@ -437,7 +455,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", B1x + (squarewidth / 2) - 10)
 	    	.attr("y", B1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("B" + i);
+	    	.text("B" + i)
+	    	.attr("font-size", "11");
 		B1x += squarewidth;
 	}
 	var triangle = firstsvg.append('polygon')
@@ -450,7 +469,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", B1x + (squarewidth / 2) - 10)
 	    	.attr("y", B1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("B" + i);
+	    	.text("B" + i)
+	    	.attr("font-size", "11");
 
 	// section D
 	var Doriginalx = scalespixels(700, 230, 350);
@@ -471,7 +491,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", D1x + (squarewidth / 2) - 10)
 	    	.attr("y", D1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("D" + i);
+	    	.text("D" + i)
+	    	.attr("font-size", "11");
 		D1x -= squarewidth;
 	}
 	D1y += squareheight;
@@ -491,7 +512,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", D1x + (squarewidth / 2) - 10)
 	    	.attr("y", D1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("D" + i);
+	    	.text("D" + i)
+	    	.attr("font-size", "11");
 		D1x -= squarewidth;
 	}
 	D1y += squareheight;
@@ -511,7 +533,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", D1x + (squarewidth / 2) - 10)
 	    	.attr("y", D1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("D" + i);
+	    	.text("D" + i)
+	    	.attr("font-size", "11");
 		D1x -= squarewidth;
 	}
 	var triangle = firstsvg.append('polygon')
@@ -524,7 +547,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", D1x + (squarewidth / 2) - 10)
 	    	.attr("y", D1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("D" + i);
+	    	.text("D" + i)
+	    	.attr("font-size", "11");
 	D1y += squareheight;
 	D1x = Doriginalx + squarewidth;
 	for (var i = 18; i < 22; i++)
@@ -542,7 +566,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", D1x + (squarewidth / 2) - 10)
 	    	.attr("y", D1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("D" + i);
+	    	.text("D" + i)
+	    	.attr("font-size", "11");
 		D1x -= squarewidth;
 	}
 	var triangle = firstsvg.append('polygon')
@@ -555,7 +580,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", D1x + (squarewidth / 2) - 10)
 	    	.attr("y", D1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("D" + i);
+	    	.text("D" + i)
+	    	.attr("font-size", "11");
 	D1y += squareheight;
 	D1x = Doriginalx + squarewidth;
 	for (var i = 23; i < 26; i++)
@@ -573,7 +599,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", D1x + (squarewidth / 2) - 10)
 	    	.attr("y", D1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("D" + i);
+	    	.text("D" + i)
+	    	.attr("font-size", "11");
 		D1x -= squarewidth;
 	}
 	var triangle = firstsvg.append('polygon')
@@ -586,7 +613,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", D1x + (squarewidth / 2) - 10)
 	    	.attr("y", D1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("D" + i);
+	    	.text("D" + i)
+	    	.attr("font-size", "11");
 	D1y += squareheight;
 	D1x = Doriginalx + squarewidth;
 	for (var i = 27; i < 29; i++)
@@ -604,7 +632,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", D1x + (squarewidth / 2) - 10)
 	    	.attr("y", D1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("D" + i);
+	    	.text("D" + i)
+	    	.attr("font-size", "11");
 		D1x -= squarewidth;
 	}
 	var triangle = firstsvg.append('polygon')
@@ -617,7 +646,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", D1x + (squarewidth / 2) - 10)
 	    	.attr("y", D1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("D" + i);
+	    	.text("D" + i)
+	    	.attr("font-size", "11");
 
 	// starting on section C
 	var Coriginalx = scalespixels(700, 429, 350);
@@ -638,7 +668,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", C1x + (squarewidth / 2) - 10)
 	    	.attr("y", C1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("C" + i);
+	    	.text("C" + i)
+	    	.attr("font-size", "11");
 		C1x += squarewidth;
 	}
 	C1y += squareheight;
@@ -658,7 +689,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", C1x + (squarewidth / 2) - 10)
 	    	.attr("y", C1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("C" + i);
+	    	.text("C" + i)
+	    	.attr("font-size", "11");
 		C1x += squarewidth;
 	}
 	C1y += squareheight;
@@ -678,7 +710,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", C1x + (squarewidth / 2) - 10)
 	    	.attr("y", C1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("C" + i);
+	    	.text("C" + i)
+	    	.attr("font-size", "11");
 		C1x += squarewidth;
 	}
 	var triangle = firstsvg.append('polygon')
@@ -691,7 +724,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", C1x + (squarewidth / 2) - 10)
 	    	.attr("y", C1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("C" + i);
+	    	.text("C" + i)
+	    	.attr("font-size", "11");
 	C1y += squareheight;
 	C1x = Coriginalx - squarewidth;
 	for (var i = 18; i < 22; i++)
@@ -709,7 +743,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", C1x + (squarewidth / 2) - 10)
 	    	.attr("y", C1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("C" + i);
+	    	.text("C" + i)
+	    	.attr("font-size", "11");
 		C1x += squarewidth;
 	}
 	var triangle = firstsvg.append('polygon')
@@ -722,7 +757,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", C1x + (squarewidth / 2) - 10)
 	    	.attr("y", C1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("C" + i);
+	    	.text("C" + i)
+	    	.attr("font-size", "11");
 	C1y += squareheight;
 	C1x = Coriginalx - squarewidth;
 	for (var i = 23; i < 26; i++)
@@ -740,7 +776,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", C1x + (squarewidth / 2) - 10)
 	    	.attr("y", C1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("C" + i);
+	    	.text("C" + i)
+	    	.attr("font-size", "11");
 		C1x += squarewidth;
 	}
 	var triangle = firstsvg.append('polygon')
@@ -753,7 +790,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", C1x + (squarewidth / 2) - 10)
 	    	.attr("y", C1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("C" + i);
+	    	.text("C" + i)
+	    	.attr("font-size", "11");
 	C1y += squareheight;
 	C1x = Coriginalx - squarewidth;
 	for (var i = 27; i < 29; i++)
@@ -771,7 +809,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", C1x + (squarewidth / 2) - 10)
 	    	.attr("y", C1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
-	    	.text("C" + i);
+	    	.text("C" + i)
+	    	.attr("font-size", "11");
 		C1x += squarewidth;
 	}
 	var triangle = firstsvg.append('polygon')
@@ -784,7 +823,8 @@ function buildfloorplan(data, datadict) {
 	    	.attr("x", C1x + (squarewidth / 2) - 10)
 	    	.attr("y", C1y + (squareheight / 2))
 	    	.attr("dy", ".30em")
- 	    	.text("C" + i);
+ 	    	.text("C" + i)
+ 	    	.attr("font-size", "11");
 
 
  	// drawing west gallery, 2nd floor

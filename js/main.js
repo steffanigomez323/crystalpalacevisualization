@@ -1,7 +1,10 @@
+// DO COLOR MIXING WITH RED AND BLUE!!!! DO PURPLE!!!
+
+
 $(document).ready(function() {
 	d3.csv("data/crystal-palace-catalog-V3.csv", function(error, data) {
 		colordict = populateClasses();
-		populateCountries();
+		//populateCountries();
     gallerydict = {
       'Extreme North': 'ENG',
       'North': 'NG',
@@ -28,15 +31,12 @@ $(document).ready(function() {
       "black": [0,0,0],
       "white": [255,255,255]
     }
-    coloradder = {
-      // mixing of colors
-
-    }
     datadict = filldataArray(data);
     buildfloorplan(data, datadict);
     var massqueries = [];
     var query1selected = []; // the items on the map that are selected and colored
     var query2selected = [];
+
     $('#countries').on("change", { items: 'data' }, function(event) {
 			var countryelements = $('#countries option');
       var classelements = $('#itemclasses option');
@@ -48,6 +48,7 @@ $(document).ready(function() {
       // since the two queries allow an OR to be done, if you want a class or a country, you select a class for
       // 1 query and a country for the other (check to make sure this logic is true)
       var count = 0;
+      var locationdictionary = {};
       for (var a = 0; a < countryelements.length; a++) {
         if (countryelements[a].selected == true) {
           if (countryelements[a].text[0] != "\u2713") {
@@ -55,6 +56,7 @@ $(document).ready(function() {
             countryelements[a].text = "\u2713" + " " + countrytext;
           }
           countryvalues.push(countryelements[a].value);
+          locationdictionary[countryelements[a]];
         } else if (countryelements[a].selected == false && countryelements[a].text[0] == "\u2713") {
           countryelements[a].text = countryelements[a].text.substring(2, countryelements[a].text.length);
         }
@@ -62,33 +64,50 @@ $(document).ready(function() {
       for (var b = 0; b < classelements.length; b++) {
         if (classelements[b].selected == true) {
           classvalues.push(classelements[b].value);
+          locationdictionary[classelements[b]] = [];
         }
       }
       for (var i = 0; i < data.length; i++) {
         // have to check if the item's country corresponds with any of the countries selected
         var countryfound = false;
         var classfound = false;
-        for (var a = 0; a < countryvalues.length; a++) {
-          if (data[i].country == countryvalues[a]) {
-            count = colorMapItem(itemselected, data[i], query1selected, colordict, count);
-            countryfound = true;
+        if (classvalues.length == 0) {
+          for (var a = 0; a < countryvalues.length; a++) {
+            if (data[i].country == countryvalues[a]) {
+              var result = colorMapItem([countryvalues[a]], data[i], locationdictionary, count, "query1");
+              count = result[0]
+              locationdictionary = result[1];
+              countryfound = true;
+            }
+          }
+        } else if (countryvalues.length == 0) { 
+          for (var b = 0; b < classvalues.length; b++) {
+            if (data[i].class == classvalues[b]) {
+              var result = colorMapItem([classvalues[b]], data[i], locationdictionary, count, "query1");
+              count = result[0];
+              locationdictionary = result[1];
+              classfound = true;
+            }
+          }
+        } else {
+          console.log('AND');
+          // going to need to do an AND operator
+          for (var a = 0; a < countryvalues.length; a++) {
+            for (var b = 0; b < classvalues.length; b++) {
+              if (data[i].country == countryvalues[a] && data[i].class == classvalues[b]) {
+                console.log(data[i]);
+                var result = colorMapItem([countryvalues[a], classvalues[b]], data[i], locationdictionary, count, "query1");
+                count = result[0];
+                locationdictionary = result[1];
+                classfound = true;
+                countryfound = true;
+              }
+            }
           }
         }
-        if (countryfound == false) {
+        if (countryfound == false || classfound == false) {
           // then the data item is not in any of the countries selected and we can make sure that its color mapping
           // is transparent
-          massqueries = query1selected;
-          massqueries = massqueries.concat(query2selected);
-          transparentMapItem(data[i], massqueries);
-        }
-        for (var b = 0; b < classvalues.length; b++) {
-          if (data[i].class == classvalues[b]) {
-            count = colorMapItem(itemselected, data[i], query1selected, colordict, count);
-            classfound = true;
-          }
-        }
-        if (classfound == false) {
-          // then the data item's class is not in any of the classes selected and we can make sure it's transparent
           massqueries = query1selected;
           massqueries = massqueries.concat(query2selected);
           transparentMapItem(data[i], massqueries);
@@ -133,7 +152,9 @@ $(document).ready(function() {
           var countryfound = false;
           for (var a = 0; a < countryvalues.length; a++) {
             if (data[i].country == countryvalues[a]) {
-              count = colorMapItem(itemselected, data[i], query1selected, colordict, count);
+              var result = colorMapItem(itemselected, data[i], query1selected, colordict, count, "query1");
+              count = result[0];
+              query1selected = result[1];
               countryfound = true;
             }
           }
@@ -144,7 +165,9 @@ $(document).ready(function() {
           }
           for (var b = 0; b < classvalues.length; b++) {
             if (data[i].class == classvalues[b]) {
-              count = colorMapItem(itemselected, data[i], query1selected, colordict, count);
+              var result = colorMapItem(itemselected, data[i], query1selected, colordict, count, "query1");
+              count = result[0];
+              query1selected = result[1];
               classfound = true;
             }
           }
@@ -192,7 +215,9 @@ $(document).ready(function() {
           var classfound = false;
           for (var a = 0; a < countryvalues.length; a++) {
             if (data[i].country == countryvalues[a]) {
-              count = colorMapItem(itemselected, data[i], query2selected, colordict, count);
+              var result = colorMapItem(itemselected, data[i], query2selected, colordict, count, "query2");
+              count = result[0];
+              query2selected = result[1];
               countryfound = true;
             }
           }
@@ -203,7 +228,9 @@ $(document).ready(function() {
           }
           for (var b = 0; b < classvalues.length; b++) {
             if (data[i].class == classvalues[b]) {
-              count = colorMapItem(itemselected, data[i], query2selected, colordict, count);
+              var result = colorMapItem(itemselected, data[i], query2selected, colordict, count, "query2");
+              count = result[0];
+              query2selected = result[1];
               classfound = true;
             }
           }
@@ -253,7 +280,9 @@ $(document).ready(function() {
           var classfound = false;
           for (var a = 0; a < countryvalues.length; a++) {
             if (data[i].country == countryvalues[a]) {
-              count = colorMapItem(itemselected, data[i], query2selected, colordict, count);
+              var result = colorMapItem(itemselected, data[i], query2selected, colordict, count, "query2");
+              count = result[0];
+              query2selected = result[1];
               countryfound = true;
             }
           }
@@ -264,7 +293,9 @@ $(document).ready(function() {
           }
           for (var b = 0; b < classvalues.length; b++) {
             if (data[i].class == classvalues[b]) {
-              count = colorMapItem(itemselected, data[i], query2selected, colordict, count);
+              var result = colorMapItem(itemselected, data[i], query2selected, colordict, count, "query2");
+              count = result[0];
+              query2selected = result[1];
               classfound = true;
             }
           }
@@ -281,8 +312,11 @@ $(document).ready(function() {
     });
 	});
 
-function colorMapItem(itemselected, dataitem, queryselected, colordict, count) {
-  itemselected.push(dataitem);
+function colorItem(classvalues, countryvalues, locationdictionary, query) {
+
+}
+
+function colorMapItem(matchedattrs, dataitem, locationdictionary, count, query) {
   var objectsection = dataitem.Division;
   objectsection = objectsection.split(", ");
   if (objectsection[0] == false) {
@@ -300,76 +334,100 @@ function colorMapItem(itemselected, dataitem, queryselected, colordict, count) {
         if (section !== "Gallery" && Number.isInteger(parseInt(square))) {
           // if the section is not on the 2nd floor and has a number attached to it, such as A1 or whatever
           if (parseInt(square) < 30) {
-            $('#' + section + square).css({ fill: colordict[itemclass]})
+            //if (query === "query1") {
+            //  $('#' + section + square).css({ fill: "red"});
+            //} else {
+            //  $('#' + section + square).css({ fill: "blue"});//colordict[itemclass]});
+            //}
             //$('#' + section + square).css({ fill: "pink"});
-            queryselected.push(section + square);
-          } else {
-            // just color the whole section
-            for (var index = 1; index < 30; index++) {
-              $('#' + section + String(index)).css({ fill: colordict[itemclass]});
-              //$('#' + section + String(index)).css({ fill: "pink"});
-              queryselected.push(section + String(index));
+            //queryselected.push(section + square);
+            for (var i = 0; i < matchedattrs.length; i++) {
+              if (locationdictionary[matchedattrs[i]].indexOf(section + square) < 0) {
+                locationdictionary[matchedattrs[i]].push(section + square);
+              }
+            }
+          } else {}
+        } else if (section === "Gallery" && Number.isInteger(parseInt(square)) == false && square) {
+          // if the section is on the second floor and does not have a number, as it should be
+          //$('.' + gallerydict[square]).css({ fill: colordict[itemclass]});
+          //$('.' + gallerydict[square]).css({ fill: "pink"});
+          //if (query === "query1") {
+          //  $('.' + gallerydict[square]).css({ fill: "red"});
+          //} else {
+          //  $('.' + gallerydict[square]).css({ fill: "blue"});
+          //}
+          //queryselected.push(gallerydict[square]);
+          for (var i = 0; i < matchedattrs.length; i++) {
+            if (locationdictionary[matchedattrs[i]].indexOf(gallerydict[square]) < 0) {
+              locationdictionary[matchedattrs[i]].push(gallerydict[square]);
             }
           }
-        } else if (section === "Gallery" && Number.isInteger(parseInt(square)) == false) {
-          $('.' + gallerydict[square]).css({ fill: colordict[itemclass]});
-          //$('.' + gallerydict[square]).css({ fill: "pink"});
-          queryselected.push(gallerydict[square]);
         } else if (square === "Machine Arcade") {
-          $('#machinearcade').css({ fill: "pink" });
-          queryselected.push('machinearcade');
-        } else if ((section === "A" || section === "B" || section === "C" || section === "D") && Number.isInteger(parseInt(square)) == false) {
-          for (var index = 1; index < 30; index++) {
-            $('#' + section + String(index)).css({ fill: colordict[itemclass]});
-            //$('#' + section + String(index)).css({ fill: "pink"});
-            queryselected.push(section + String(index));
+          // if the section is in the machine arcade section
+          //if (query === "query1") {
+          //  $('#machinearcade').css({ fill: "red" });
+          //} else {
+          //  $('#machinearcade').css({ fill: "blue" });
+          //}
+          //queryselected.push('machinearcade');
+          for (var i = 0; i < matchedattrs.length; i++) {
+            if (locationdictionary[matchedattrs[i]].indexOf("machinearcade") < 0) {
+              locationdictionary[matchedattrs[i]].push("machinearcade");
+            }
           }
+        } else if ((section === "A" || section === "B" || section === "C" || section === "D") && Number.isInteger(parseInt(square)) == false) {
+          // if the section has an "A" or "B" etc. associatec with it but no number then just leave it out
         }
       });
     });
   }
-  return count;
+  return [count, locationdictionary];
 }
 
-function transparentMapItem(dataitem, queryselected) {
+function locationinDictionary(location, locationdictionary) {
+  Object.keys(locationdictionary).forEach(function(key) {
+    if (locationdictionary[key].indexOf(location)) {
+      return true;
+    }
+  });
+  return false;
+}
+
+function transparentMapItem(dataitem, locationdictionary) {
+
   var objectsection = dataitem.Division;
-  objectsection = objectsection.split(", ");
+  objectsection = objectsection.split(",");
   if (objectsection[0] == false) {
     return;
+    // meaning that this item is not an actual item in the dataset, and we've reached the end,
+    // since we can't place an item without knowing if it's even on the 1st or 2nd floor
   }
+  var itemclass = dataitem.class;
   var courtsquares = dataitem.Court;
-  courtsquares = courtsquares.split(", ");
-  var classitems = dataitem.class;
+  courtsquares = courtsquares.split(",");
   if (courtsquares[0]) {
     courtsquares.forEach(function(square) {
       objectsection.forEach(function(section) {
-        if (section !== "Gallery" && Number.isInteger(square)) {
-          if (parseInt(square) < 30) {
-            if (queryselected.indexOf(section + square) < 0) {
-              $('#' + section + square).css({ fill: "transparent" });
-            }
-          } else {
-            // just color the whole section
-            for (var index = 1; index < 30; index++) {
-              if (queryselected.indexOf(section + String(index)) < 0) {
-                $('#' + section + String(index)).css({ fill: "transparent"});
-              }
-            }
-          }
-        } else if (section === "Gallery" && Number.isInteger(square) == false) {
-          if (queryselected.indexOf(gallerydict[square]) < 0) {
+        square = square.trim();
+        section = section.trim();
+        if (section !== "Gallery" && Number.isInteger(parseInt(square))) {
+          if (parseInt(square) < 30 && locationinDictionary(section + square, locationdictionary) == false) {
+            $('#' + section + square).css({ fill: "transparent"});
+          } else {}
+        } else if (section === "Gallery" && Number.isInteger(square) == false && square) {
+          if (locationinDictionary(gallerydict[square]) == false) {
             $('.' + gallerydict[square]).css({ fill: "transparent"});  
           }
         } else if (square === "Machine Arcade") {
-          if (queryselected.indexOf('machinearcade') < 0) {
+          if (locationinDictionary('machinearcade', locationdictionary) == false) {
             $('#machinearcade').css({ fill: "transparent" });
           }
         } else if ((section === "A" || section === "B" || section === "C" || section === "D") && Number.isInteger(square) == false) {
-          for (var index = 1; index < 30; index++) {
-            if (queryselected.indexOf(section + String(index)) < 0) {
-              $('#' + section + String(index)).css({ fill: "transparent"});
-            }
-          }
+          //for (var index = 1; index < 30; index++) {
+          //  if (queryselected.indexOf(section + String(index)) < 0) {
+          //    $('#' + section + String(index)).css({ fill: "transparent"});
+          //  }
+          //}
         }
       });
     });
@@ -423,29 +481,22 @@ function populateClasses() {
         value: i.toString(),
         text: i.toString() + ": " + classesdict[i]
     }));
-		if (i < 5) {
-			colordict[i] = 'aqua';
-		} else if (i >= 5 && i < 11) {
-			colordict[i] = 'lime'
-		} else if (i >= 11 && i < 21) {
-			colordict[i] = 'yellow'
-		} else if (i >= 21 && i < 30) {
-			colordict[i] = 'magenta'
-		} else {
-			colordict[i] = 'blue'
-		}
+		//if (i < 5) {
+		//	colordict[i] = 'aqua';
+		//} else if (i >= 5 && i < 11) {
+		//	colordict[i] = 'lime'
+		//} else if (i >= 11 && i < 21) {
+		//	colordict[i] = 'yellow'
+		//} else if (i >= 21 && i < 30) {
+		//	colordict[i] = 'magenta'
+		//} else {
+		//	colordict[i] = 'blue'
+		//}
 	}
 	return colordict;
 };
 
-function extractRGB(rgbstring) {
-  var re = /(.*rgb\s+)(.*)(\s+\).*)/;
-  var newtext = rgbstring.replace(re, "$2");
-  var rgbtext = newtext.split(", ");
-  return [parseInt(rgbtext[0]), parseInt(rgbtext[1]), parseInt(rgbtext[2])];
-}
-
-function populateCountries() {
+/*function populateCountries() {
 	var countries = ["USA", "UK", "Germany", "France", "Belgium", "Austria", "British-Guiana", 
 		"Holland", "Italy", "Newfoundland", "Switzerland", "Swedish-Norway"]
 	for (var i = 0; i < countries.length; i++)
@@ -459,7 +510,7 @@ function populateCountries() {
         text: countries[i]
     }));
 	}
-}
+}*/
 
 function filldataArray(data) {
 	var datadict = {};
@@ -506,33 +557,6 @@ function displayResults(dataitems, query, count) {
   if (count > 0) {
     $('#query'+query.toString()+'button').trigger( "click" );
   }
-}
-
-function ColorLuminance(hex, lum) {
-
-  // validate hex string
-  hex = String(hex).replace(/[^0-9a-f]/gi, '');
-  if (hex.length < 6) {
-    hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
-  }
-  lum = lum || 0;
-
-  // convert to decimal and change luminosity
-  var rgb = "#", c, i;
-  for (i = 0; i < 3; i++) {
-    c = parseInt(hex.substr(i*2,2), 16);
-    c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-    rgb += ("00"+c).substr(c.length);
-  }
-
-  return rgb;
-}
-
-function colorMixer(rgb1,rgb2) {
-  var r = (rgb1[0] + rgb2[0]) / 2;
-  var g = (rgb1[1] + rgb2[1]) / 2;
-  var b = (rgb1[2] + rgb2[2]) / 2;
-  return [Math.round(r),Math.round(g),Math.round(b)];
 }
 
 function openQueryTable(evt, queryName) {
