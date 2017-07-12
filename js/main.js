@@ -44,9 +44,6 @@ $(document).ready(function() {
       var itemselected = [];
       var countryvalues = []; // the countries that are selected
       var classvalues = []; // the classes that are selected
-      // right now everything works as an AND, if both class and country are selected then it will do an AND, 
-      // since the two queries allow an OR to be done, if you want a class or a country, you select a class for
-      // 1 query and a country for the other (check to make sure this logic is true)
       var count = 0;
       var locationdictionary = {};
       for (var a = 0; a < countryelements.length; a++) {
@@ -56,7 +53,7 @@ $(document).ready(function() {
             countryelements[a].text = "\u2713" + " " + countrytext;
           }
           countryvalues.push(countryelements[a].value);
-          locationdictionary[countryelements[a]];
+          locationdictionary[countryelements[a].value] = [];
         } else if (countryelements[a].selected == false && countryelements[a].text[0] == "\u2713") {
           countryelements[a].text = countryelements[a].text.substring(2, countryelements[a].text.length);
         }
@@ -64,7 +61,7 @@ $(document).ready(function() {
       for (var b = 0; b < classelements.length; b++) {
         if (classelements[b].selected == true) {
           classvalues.push(classelements[b].value);
-          locationdictionary[classelements[b]] = [];
+          locationdictionary[classelements[b].value] = [];
         }
       }
       for (var i = 0; i < data.length; i++) {
@@ -74,7 +71,7 @@ $(document).ready(function() {
         if (classvalues.length == 0) {
           for (var a = 0; a < countryvalues.length; a++) {
             if (data[i].country == countryvalues[a]) {
-              var result = colorMapItem([countryvalues[a]], data[i], locationdictionary, count, "query1");
+              var result = fillMapItem([countryvalues[a]], data[i], locationdictionary, count, "query1");
               count = result[0]
               locationdictionary = result[1];
               countryfound = true;
@@ -83,20 +80,18 @@ $(document).ready(function() {
         } else if (countryvalues.length == 0) { 
           for (var b = 0; b < classvalues.length; b++) {
             if (data[i].class == classvalues[b]) {
-              var result = colorMapItem([classvalues[b]], data[i], locationdictionary, count, "query1");
+              var result = fillMapItem([classvalues[b]], data[i], locationdictionary, count, "query1");
               count = result[0];
               locationdictionary = result[1];
               classfound = true;
             }
           }
         } else {
-          console.log('AND');
           // going to need to do an AND operator
           for (var a = 0; a < countryvalues.length; a++) {
             for (var b = 0; b < classvalues.length; b++) {
               if (data[i].country == countryvalues[a] && data[i].class == classvalues[b]) {
-                console.log(data[i]);
-                var result = colorMapItem([countryvalues[a], classvalues[b]], data[i], locationdictionary, count, "query1");
+                var result = fillMapItem([countryvalues[a], classvalues[b]], data[i], locationdictionary, count, "query1");
                 count = result[0];
                 locationdictionary = result[1];
                 classfound = true;
@@ -105,12 +100,13 @@ $(document).ready(function() {
             }
           }
         }
+        query1selected = colorItems(countryvalues, classvalues, locationdictionary, "query1");
         if (countryfound == false || classfound == false) {
           // then the data item is not in any of the countries selected and we can make sure that its color mapping
           // is transparent
-          massqueries = query1selected;
-          massqueries = massqueries.concat(query2selected);
-          transparentMapItem(data[i], massqueries);
+          //massqueries = query1selected;
+          //massqueries = massqueries.concat(query2selected);
+          transparentMapItem(data[i], query1selected);
         }
       }
       displayResults(itemselected, 1, count);
@@ -127,10 +123,12 @@ $(document).ready(function() {
         var countryvalues = [];
         var classvalues = [];
         var count = 0;
+        var locationdictionary = {};
 
         for (var a = 0; a < countryelements.length; a++) {
           if (countryelements[a].selected == true) {
             countryvalues.push(countryelements[a].value);
+            locationdictionary[countryelements[a].value] = [];
           }
         }
 
@@ -141,6 +139,7 @@ $(document).ready(function() {
               classelements[b].text = "\u2713" + " " + classtext;
             }
             classvalues.push(classelements[b].value);
+            locationdictionary[classelements[b].value] = [];
           } else if (classelements[b].selected == false && classelements[b].text[0] == "\u2713") {
             classelements[b].text = classelements[b].text.substring(2, classelements[b].text.length);
           }
@@ -150,31 +149,47 @@ $(document).ready(function() {
         for (var i = 0; i < data.length; i++) {
           var classfound = false;
           var countryfound = false;
-          for (var a = 0; a < countryvalues.length; a++) {
-            if (data[i].country == countryvalues[a]) {
-              var result = colorMapItem(itemselected, data[i], query1selected, colordict, count, "query1");
-              count = result[0];
-              query1selected = result[1];
-              countryfound = true;
+
+
+          if (classvalues.length == 0) {
+            for (var a = 0; a < countryvalues.length; a++) {
+              if (data[i].country == countryvalues[a]) {
+                var result = fillMapItem([countryvalues[a]], data[i], locationdictionary, count, "query1");
+                count = result[0]
+                locationdictionary = result[1];
+                countryfound = true;
+              }
+            }
+          } else if (countryvalues.length == 0) { 
+            for (var b = 0; b < classvalues.length; b++) {
+              if (data[i].class == classvalues[b]) {
+                var result = fillMapItem([classvalues[b]], data[i], locationdictionary, count, "query1");
+                count = result[0];
+                locationdictionary = result[1];
+                classfound = true;
+              }
+            }
+          } else {
+            // going to need to do an AND operator
+            for (var a = 0; a < countryvalues.length; a++) {
+              for (var b = 0; b < classvalues.length; b++) {
+                if (data[i].country == countryvalues[a] && data[i].class == classvalues[b]) {
+                  var result = fillMapItem([countryvalues[a], classvalues[b]], data[i], locationdictionary, count, "query1");
+                  count = result[0];
+                  locationdictionary = result[1];
+                  classfound = true;
+                  countryfound = true;
+                }
+              }
             }
           }
-          if (countryfound == false) {
-            massqueries = query1selected;
-            massqueries = massqueries.concat(query2selected);
-            transparentMapItem(data[i], massqueries);
-          }
-          for (var b = 0; b < classvalues.length; b++) {
-            if (data[i].class == classvalues[b]) {
-              var result = colorMapItem(itemselected, data[i], query1selected, colordict, count, "query1");
-              count = result[0];
-              query1selected = result[1];
-              classfound = true;
-            }
-          }
-          if (classfound == false) {
-            massqueries = query1selected;
-            massqueries = massqueries.concat(query2selected);
-            transparentMapItem(data[i], massqueries);
+          query1selected = colorItems(countryvalues, classvalues, locationdictionary, "query1");
+          if (countryfound == false || classfound == false) {
+            // then the data item is not in any of the countries selected and we can make sure that its color mapping
+            // is transparent
+            //massqueries = query1selected;
+            //massqueries = massqueries.concat(query2selected);
+            transparentMapItem(data[i], query1selected);
           }
         }
         displayResults(itemselected, 1, count);
@@ -182,83 +197,98 @@ $(document).ready(function() {
         dimdiv.innerHTML = 'The number of items: ' + count.toString();
       });
 
-
       $('#countries2').on("change", { items: 'data' }, function(event) {
-        var countryelements = $('#countries2 option');
-        var classelements = $('#itemclasses2 option');
-        query2selected = [];
-        var itemselected = [];
-        var countryvalues = [];
-        var classvalues = [];
-        var count = 0;
-
-        for (var a = 0; a < countryelements.length; a++) {
-          if (countryelements[a].selected == true) {
-            if (countryelements[a].text[0] != "\u2713") {
-              var countrytext = countryelements[a].text;
-              countryelements[a].text = "\u2713" + " " + countrytext;
-            }
-            countryvalues.push(countryelements[a].value);
-          } else if (countryelements[a].selected == false && countryelements[a].text[0] == "\u2713") {
-            countryelements[a].text = countryelements[a].text.substring(2, countryelements[a].text.length);
+      var countryelements = $('#countries2 option');
+      var classelements = $('#itemclasses2 option');
+      query2selected = []; // the items that are selected in query 1
+      var itemselected = [];
+      var countryvalues = []; // the countries that are selected
+      var classvalues = []; // the classes that are selected
+      var count = 0;
+      var locationdictionary = {};
+      for (var a = 0; a < countryelements.length; a++) {
+        if (countryelements[a].selected == true) {
+          if (countryelements[a].text[0] != "\u2713") {
+            var countrytext = countryelements[a].text;
+            countryelements[a].text = "\u2713" + " " + countrytext;
           }
+          countryvalues.push(countryelements[a].value);
+          locationdictionary[countryelements[a].value] = [];
+        } else if (countryelements[a].selected == false && countryelements[a].text[0] == "\u2713") {
+          countryelements[a].text = countryelements[a].text.substring(2, countryelements[a].text.length);
         }
-
-        for (var b = 0; b < classelements.length; b++) {
-          if (classelements[b].selected == true) {
-            classvalues.push(classelements[b].value);
-          }
+      }
+      for (var b = 0; b < classelements.length; b++) {
+        if (classelements[b].selected == true) {
+          classvalues.push(classelements[b].value);
+          locationdictionary[classelements[b].value] = [];
         }
-
-        for (var i = 0; i < data.length; i++) {
-          var countryfound = false;
-          var classfound = false;
+      }
+      for (var i = 0; i < data.length; i++) {
+        // have to check if the item's country corresponds with any of the countries selected
+        var countryfound = false;
+        var classfound = false;
+        if (classvalues.length == 0) {
           for (var a = 0; a < countryvalues.length; a++) {
             if (data[i].country == countryvalues[a]) {
-              var result = colorMapItem(itemselected, data[i], query2selected, colordict, count, "query2");
-              count = result[0];
-              query2selected = result[1];
+              var result = fillMapItem([countryvalues[a]], data[i], locationdictionary, count, "query2");
+              count = result[0]
+              locationdictionary = result[1];
               countryfound = true;
             }
           }
-          if (countryfound == false) {
-            massqueries = query2selected;
-            massqueries = massqueries.concat(query1selected);
-            transparentMapItem(data[i], massqueries);
-          }
+        } else if (countryvalues.length == 0) { 
           for (var b = 0; b < classvalues.length; b++) {
             if (data[i].class == classvalues[b]) {
-              var result = colorMapItem(itemselected, data[i], query2selected, colordict, count, "query2");
+              var result = fillMapItem([classvalues[b]], data[i], locationdictionary, count, "query2");
               count = result[0];
-              query2selected = result[1];
+              locationdictionary = result[1];
               classfound = true;
             }
           }
-          if (classfound == false) {
-            massqueries = query2selected;
-            massqueries = massqueries.concat(query1selected);
-            transparentMapItem(data[i], massqueries);
+        } else {
+          // going to need to do an AND operator
+          for (var a = 0; a < countryvalues.length; a++) {
+            for (var b = 0; b < classvalues.length; b++) {
+              if (data[i].country == countryvalues[a] && data[i].class == classvalues[b]) {
+                var result = fillMapItem([countryvalues[a], classvalues[b]], data[i], locationdictionary, count, "query2");
+                count = result[0];
+                locationdictionary = result[1];
+                classfound = true;
+                countryfound = true;
+              }
+            }
           }
         }
-        displayResults(itemselected, 2, count);
-        var dimdiv = document.getElementById('dimensionality2');
-        dimdiv.innerHTML = 'The number of items: ' + count.toString();
-      });
+        query2selected = colorItems(countryvalues, classvalues, locationdictionary, "query2");
+        if (countryfound == false || classfound == false) {
+          // then the data item is not in any of the countries selected and we can make sure that its color mapping
+          // is transparent
+          //massqueries = query1selected;
+          //massqueries = massqueries.concat(query2selected);
+          transparentMapItem(data[i], query2selected);
+        }
+      }
+      displayResults(itemselected, 1, count);
+      var dimdiv = document.getElementById('dimensionality1');
+      dimdiv.innerHTML = 'The number of items: ' + count.toString();
+     });
 
+  
       $('#itemclasses2').on("change", { items: 'data' }, function(event) {
         var countryelements = $('#countries2 option');
         var classelements = $('#itemclasses2 option');
-        //var countryitems = 0;
         query2selected = [];
         var itemselected = [];
-
         var countryvalues = [];
         var classvalues = [];
         var count = 0;
+        var locationdictionary = {};
 
         for (var a = 0; a < countryelements.length; a++) {
           if (countryelements[a].selected == true) {
             countryvalues.push(countryelements[a].value);
+            locationdictionary[countryelements[a].value] = [];
           }
         }
 
@@ -269,6 +299,7 @@ $(document).ready(function() {
               classelements[b].text = "\u2713" + " " + classtext;
             }
             classvalues.push(classelements[b].value);
+            locationdictionary[classelements[b].value] = [];
           } else if (classelements[b].selected == false && classelements[b].text[0] == "\u2713") {
             classelements[b].text = classelements[b].text.substring(2, classelements[b].text.length);
           }
@@ -276,61 +307,76 @@ $(document).ready(function() {
 
 
         for (var i = 0; i < data.length; i++) {
-          var countryfound = false;
           var classfound = false;
-          for (var a = 0; a < countryvalues.length; a++) {
-            if (data[i].country == countryvalues[a]) {
-              var result = colorMapItem(itemselected, data[i], query2selected, colordict, count, "query2");
-              count = result[0];
-              query2selected = result[1];
-              countryfound = true;
+          var countryfound = false;
+
+
+          if (classvalues.length == 0) {
+            for (var a = 0; a < countryvalues.length; a++) {
+              if (data[i].country == countryvalues[a]) {
+                var result = fillMapItem([countryvalues[a]], data[i], locationdictionary, count, "query2");
+                count = result[0]
+                locationdictionary = result[1];
+                countryfound = true;
+              }
+            }
+          } else if (countryvalues.length == 0) { 
+            for (var b = 0; b < classvalues.length; b++) {
+              if (data[i].class == classvalues[b]) {
+                var result = fillMapItem([classvalues[b]], data[i], locationdictionary, count, "query2");
+                count = result[0];
+                locationdictionary = result[1];
+                classfound = true;
+              }
+            }
+          } else {
+            // going to need to do an AND operator
+            for (var a = 0; a < countryvalues.length; a++) {
+              for (var b = 0; b < classvalues.length; b++) {
+                if (data[i].country == countryvalues[a] && data[i].class == classvalues[b]) {
+                  var result = fillMapItem([countryvalues[a], classvalues[b]], data[i], locationdictionary, count, "query2");
+                  count = result[0];
+                  locationdictionary = result[1];
+                  classfound = true;
+                  countryfound = true;
+                }
+              }
             }
           }
-          if (countryfound == false) {
-            massqueries = query2selected;
-            massqueries = massqueries.concat(query1selected);
-            transparentMapItem(data[i], massqueries);
-          }
-          for (var b = 0; b < classvalues.length; b++) {
-            if (data[i].class == classvalues[b]) {
-              var result = colorMapItem(itemselected, data[i], query2selected, colordict, count, "query2");
-              count = result[0];
-              query2selected = result[1];
-              classfound = true;
-            }
-          }
-          if (classfound == false) {
-            massqueries = query2selected;
-            massqueries = massqueries.concat(query1selected);
-            transparentMapItem(data[i], massqueries);
+          query1selected = colorItems(countryvalues, classvalues, locationdictionary, "query2");
+          if (countryfound == false || classfound == false) {
+            // then the data item is not in any of the countries selected and we can make sure that its color mapping
+            // is transparent
+            //massqueries = query1selected;
+            //massqueries = massqueries.concat(query2selected);
+            transparentMapItem(data[i], query2selected);
           }
         }
-        displayResults(itemselected, 2, count);
-        var dimdiv = document.getElementById('dimensionality2');
+        displayResults(itemselected, 1, count);
+        var dimdiv = document.getElementById('dimensionality1');
         dimdiv.innerHTML = 'The number of items: ' + count.toString();
       });
+
     });
 	});
 
-function colorItem(classvalues, countryvalues, locationdictionary, query) {
-
-}
-
-function colorMapItem(matchedattrs, dataitem, locationdictionary, count, query) {
+function fillMapItem(matchedattrs, dataitem, locationdictionary, count, query) {
   var objectsection = dataitem.Division;
-  objectsection = objectsection.split(", ");
+  objectsection = objectsection.split(",");
   if (objectsection[0] == false) {
-    return count;
+    return [count, locationdictionary];
     // meaning that this item is not an actual item in the dataset, and we've reached the end,
     // since we can't place an item without knowing if it's even on the 1st or 2nd floor
   }
   var itemclass = dataitem.class;
   var courtsquares = dataitem.Court;
-  courtsquares = courtsquares.split(", ");
+  courtsquares = courtsquares.split(",");
   count++;
   if (courtsquares[0]) {
     courtsquares.forEach(function(square) {
       objectsection.forEach(function(section) {
+        square = square.trim();
+        section = section.trim();
         if (section !== "Gallery" && Number.isInteger(parseInt(square))) {
           // if the section is not on the 2nd floor and has a number attached to it, such as A1 or whatever
           if (parseInt(square) < 30) {
@@ -393,7 +439,7 @@ function locationinDictionary(location, locationdictionary) {
   return false;
 }
 
-function transparentMapItem(dataitem, locationdictionary) {
+function transparentMapItem(dataitem, queryselected) {
 
   var objectsection = dataitem.Division;
   objectsection = objectsection.split(",");
@@ -411,30 +457,82 @@ function transparentMapItem(dataitem, locationdictionary) {
         square = square.trim();
         section = section.trim();
         if (section !== "Gallery" && Number.isInteger(parseInt(square))) {
-          if (parseInt(square) < 30 && locationinDictionary(section + square, locationdictionary) == false) {
-            $('#' + section + square).css({ fill: "transparent"});
+          if (parseInt(square) < 30) {// && locationinDictionary(section + square, locationdictionary) == false) {
+            if (queryselected.indexOf(section + square) < 0) {
+              $('.' + section + square).css({ fill: "transparent"});
+            }
           } else {}
         } else if (section === "Gallery" && Number.isInteger(square) == false && square) {
-          if (locationinDictionary(gallerydict[square]) == false) {
+          if (queryselected.indexOf(gallerydict[square]) < 0) {//locationinDictionary(gallerydict[square]) == false) {
             $('.' + gallerydict[square]).css({ fill: "transparent"});  
           }
         } else if (square === "Machine Arcade") {
-          if (locationinDictionary('machinearcade', locationdictionary) == false) {
-            $('#machinearcade').css({ fill: "transparent" });
+          if (queryselected.indexOf('machinearcade') < 0) {//locationinDictionary('machinearcade', locationdictionary) == false) {
+            $('.machinearcade').css({ fill: "transparent" });
           }
-        } else if ((section === "A" || section === "B" || section === "C" || section === "D") && Number.isInteger(square) == false) {
-          //for (var index = 1; index < 30; index++) {
-          //  if (queryselected.indexOf(section + String(index)) < 0) {
-          //    $('#' + section + String(index)).css({ fill: "transparent"});
-          //  }
-          //}
-        }
+        } else if ((section === "A" || section === "B" || section === "C" || section === "D") && Number.isInteger(square) == false) {}
       });
     });
   }
 }
 
+function colorItems(countryvalues, classvalues, locationdictionary, query) {
+  var countries = [];
+  var classes = [];
+  countryvalues.forEach(function(country) {
+    countries = countries.concat(locationdictionary[country]);
+  });
+  classvalues.forEach(function(category) {
+    classes = classes.concat(locationdictionary[category]);
+  });
+  if (classes.length == 0) {
+    if (query === "query1") {
+      countries.forEach(function(loc) {
+        $('.' + loc).css({ fill: "red" });
+      });
+    } else {
+      countries.forEach(function(loc) {
+        $('.' + loc).css({ fill: "blue" });
+      });
+    }
+    return countries;
+  } else if (countries.length == 0) {
+    if (query == "query1") {
+      classes.forEach(function(loc) {
+        $('.' + loc).css({ fill: "red" });
+      });
+    } else {
+      classes.forEach(function(loc) {
+        $('.' + loc).css({ fill: "blue" });
+      });
+    }
+    return classes;
+  } else {
+    var commonloc = checkIntersection(classes, countries);
+    if (query === "query1") {
+      commonloc.forEach(function(loc) {
+        $('.' + loc).css({ fill: "red"});
+      });
+    } else {
+      commonloc.forEach(function(loc) {
+        $('.' + loc).css({fill: "blue" });
+      });
+    }
+    return commonloc;
+  }
+}
 
+function checkIntersection(array1, array2) {
+  var result = [];
+  array1.forEach(function(a1) {
+    array2.forEach(function(b1) {
+      if (a1 === b1) {
+        result.push(a1);
+      }
+    });
+  });
+  return result;
+}
 
 
 function populateClasses() {

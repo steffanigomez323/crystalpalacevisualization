@@ -44,7 +44,7 @@ function buildfloorplan(data, datadict) {
 	 	.attr("y", 0)
 	 	.attr("width", scalespixels(700, 693, 350))
 	 	.attr("height", scalespixels(700, 39, 350))
-	 	.attr("id", "machinearcade")
+	 	.attr("class", "machinearcade")
 	 	.attr("fill", "transparent")
 	 	.attr("stroke", "black")
 	 	.attr("stroke-width", 2);
@@ -54,7 +54,7 @@ function buildfloorplan(data, datadict) {
 	 	.attr("y", 0)
 	 	.attr("width", 346.5)
 	 	.attr("height", 19.5)
-	 	.attr("id", "picturegallery")
+	 	.attr("class", "picturegallery")
 	 	.attr("fill", "transparent")
 	 	.attr("stroke", "black")
 	 	.attr("stroke-width", 2);
@@ -132,7 +132,7 @@ function buildfloorplan(data, datadict) {
  			.attr("fill", "transparent")
  			.attr("stroke", "black")
  			.attr("stroke-width", 2)
-  			.attr("id", "A" + i);
+  			.attr("class", "A" + i);
  		firstsvg.append("text")
  	    	.attr("x", A1x + (squarewidth / 2) - 10)
  	    	.attr("y", A1y + (squareheight / 2))
@@ -153,7 +153,7 @@ function buildfloorplan(data, datadict) {
 			.attr("fill", "transparent")
 			.attr("stroke", "black")
 			.attr("stroke-width", 2)
-			.attr("id", "A" + i);
+			.attr("class", "A" + i);
 		firstsvg.append("text")
 	    	.attr("x", A1x + (squarewidth / 2) - 10)
 	    	.attr("y", A1y + (squareheight / 2))
@@ -174,7 +174,7 @@ function buildfloorplan(data, datadict) {
 			.attr("fill", "transparent")
 			.attr("stroke", "black")
 			.attr("stroke-width", 2)
-			.attr("id", "A" + i);
+			.attr("class", "A" + i);
 		firstsvg.append("text")
 	    	.attr("x", A1x + (squarewidth / 2) - 10)
 	    	.attr("y", A1y + (squareheight / 2))
@@ -188,7 +188,7 @@ function buildfloorplan(data, datadict) {
 	    .attr("stroke", "black")
 	    .attr("fill", "transparent")
 	    .attr("stroke-width", 2)
-	    .attr("id", "A" + i);
+	    .attr("class", "A" + i);
 	firstsvg.append("text")
 	    	.attr("x", A1x + (squarewidth / 2) - 10)
 	    	.attr("y", A1y + (squareheight / 2))
@@ -207,7 +207,7 @@ function buildfloorplan(data, datadict) {
 			.attr("fill", "transparent")
 			.attr("stroke", "black")
 			.attr("stroke-width", 2)
-			.attr("id", "A" + i);
+			.attr("class", "A" + i);
 		firstsvg.append("text")
 	    	.attr("x", A1x + (squarewidth / 2) - 10)
 	    	.attr("y", A1y + (squareheight / 2))
@@ -221,7 +221,7 @@ function buildfloorplan(data, datadict) {
 	    .attr("stroke", "black")
 	    .attr("fill", "transparent")
 	    .attr("stroke-width", 2)
-	    .attr("id", "A" + i);
+	    .attr("class", "A" + i);
 	firstsvg.append("text")
 	    	.attr("x", A1x + (squarewidth / 2) - 10)
 	    	.attr("y", A1y + (squareheight / 2))
@@ -240,7 +240,7 @@ function buildfloorplan(data, datadict) {
 			.attr("fill", "transparent")
 			.attr("stroke", "black")
 			.attr("stroke-width", 2)
-			.attr("id", "A" + i);
+			.attr("class", "A" + i);
 		firstsvg.append("text")
 	    	.attr("x", A1x + (squarewidth / 2) - 10)
 	    	.attr("y", A1y + (squareheight / 2))
@@ -254,7 +254,7 @@ function buildfloorplan(data, datadict) {
 	    .attr("stroke", "black")
 	    .attr("fill", "transparent")
 	    .attr("stroke-width", 2)
-	    .attr("id", "A" + i);
+	    .attr("class", "A" + i);
 	firstsvg.append("text")
 	    	.attr("x", A1x + (squarewidth / 2) - 10)
 	    	.attr("y", A1y + (squareheight / 2))
@@ -273,7 +273,7 @@ function buildfloorplan(data, datadict) {
 			.attr("fill", "transparent")
 			.attr("stroke", "black")
 			.attr("stroke-width", 2)
-			.attr("id", "A" + i);
+			.attr("class", "A" + i);
 		firstsvg.append("text")
 	    	.attr("x", A1x + (squarewidth / 2) - 10)
 	    	.attr("y", A1y + (squareheight / 2))
@@ -287,7 +287,7 @@ function buildfloorplan(data, datadict) {
 	    .attr("stroke", "black")
 	    .attr("fill", "transparent")
 	    .attr("stroke-width", 2)
-	    .attr("id", "A" + i);
+	    .attr("class", "A" + i);
 	firstsvg.append("text")
 	    	.attr("x", A1x + (squarewidth / 2) - 10)
 	    	.attr("y", A1y + (squareheight / 2))
@@ -309,7 +309,7 @@ function buildfloorplan(data, datadict) {
 			.attr("fill", "transparent")
 			.attr("stroke", "black")
 			.attr("stroke-width", 2)
-			.attr("id", "B" + i);
+			.attr("class", "B" + i);
 		firstsvg.append("text")
 	    	.attr("x", B1x + (squarewidth / 2) - 10)
 	    	.attr("y", B1y + (squareheight / 2))
@@ -330,7 +330,7 @@ function buildfloorplan(data, datadict) {
 			.attr("fill", "transparent")
 			.attr("stroke", "black")
 			.attr("stroke-width", 2)
-			.attr("id", "B" + i);
+			.attr("class", "B" + i);
 		firstsvg.append("text")
 	    	.attr("x", B1x + (squarewidth / 2) - 10)
 	    	.attr("y", B1y + (squareheight / 2))
@@ -351,7 +351,7 @@ function buildfloorplan(data, datadict) {
 			.attr("fill", "transparent")
 			.attr("stroke", "black")
 			.attr("stroke-width", 2)
-			.attr("id", "B" + i);
+			.attr("class", "B" + i);
 		firstsvg.append("text")
 	    	.attr("x", B1x + (squarewidth / 2) - 10)
 	    	.attr("y", B1y + (squareheight / 2))
@@ -365,7 +365,7 @@ function buildfloorplan(data, datadict) {
 	    .attr("fill", "transparent")
 	    .attr("stroke", "black")
 	    .attr("stroke-width", 2)
-	    .attr("id", "B" + i);
+	    .attr("class", "B" + i);
 	firstsvg.append("text")
 	    	.attr("x", B1x + (squarewidth / 2) - 10)
 	    	.attr("y", B1y + (squareheight / 2))
@@ -384,7 +384,7 @@ function buildfloorplan(data, datadict) {
 			.attr("fill", "transparent")
 			.attr("stroke", "black")
 			.attr("stroke-width", 2)
-			.attr("id", "B" + i);
+			.attr("class", "B" + i);
 		firstsvg.append("text")
 	    	.attr("x", B1x + (squarewidth / 2) - 10)
 	    	.attr("y", B1y + (squareheight / 2))
@@ -398,7 +398,7 @@ function buildfloorplan(data, datadict) {
 	    .attr("fill", "transparent")
 	    .attr("stroke", "black")
 	    .attr("stroke-width", 2)
-	    .attr("id", "B" + i);
+	    .attr("class", "B" + i);
 	firstsvg.append("text")
 	    	.attr("x", B1x + (squarewidth / 2) - 10)
 	    	.attr("y", B1y + (squareheight / 2))
@@ -417,7 +417,7 @@ function buildfloorplan(data, datadict) {
 			.attr("fill", "transparent")
 			.attr("stroke", "black")
 			.attr("stroke-width", 2)
-			.attr("id", "B" + i);
+			.attr("class", "B" + i);
 		firstsvg.append("text")
 	    	.attr("x", B1x + (squarewidth / 2) - 10)
 	    	.attr("y", B1y + (squareheight / 2))
@@ -431,7 +431,7 @@ function buildfloorplan(data, datadict) {
 	    .attr("fill", "transparent")
 	    .attr("stroke", "black")
 	    .attr("stroke-width", 2)
-	    .attr("id", "B" + i);
+	    .attr("class", "B" + i);
 	firstsvg.append("text")
 	    	.attr("x", B1x + (squarewidth / 2) - 10)
 	    	.attr("y", B1y + (squareheight / 2))
@@ -450,7 +450,7 @@ function buildfloorplan(data, datadict) {
 			.attr("fill", "transparent")
 			.attr("stroke", "black")
 			.attr("stroke-width", 2)
-			.attr("id", "B" + i);
+			.attr("class", "B" + i);
 		firstsvg.append("text")
 	    	.attr("x", B1x + (squarewidth / 2) - 10)
 	    	.attr("y", B1y + (squareheight / 2))
@@ -464,7 +464,7 @@ function buildfloorplan(data, datadict) {
 	    .attr("fill", "transparent")
 	    .attr("stroke", "black")
 	    .attr("stroke-width", 2)
-	    .attr("id", "B" + i);
+	    .attr("class", "B" + i);
 	firstsvg.append("text")
 	    	.attr("x", B1x + (squarewidth / 2) - 10)
 	    	.attr("y", B1y + (squareheight / 2))
@@ -486,7 +486,7 @@ function buildfloorplan(data, datadict) {
 			.attr("fill", "transparent")
 			.attr("stroke", "black")
 			.attr("stroke-width", 2)
-			.attr("id", "D" + i);
+			.attr("class", "D" + i);
 		firstsvg.append("text")
 	    	.attr("x", D1x + (squarewidth / 2) - 10)
 	    	.attr("y", D1y + (squareheight / 2))
@@ -507,7 +507,7 @@ function buildfloorplan(data, datadict) {
 			.attr("fill", "transparent")
 			.attr("stroke", "black")
 			.attr("stroke-width", 2)
-			.attr("id", "D" + i);
+			.attr("class", "D" + i);
 		firstsvg.append("text")
 	    	.attr("x", D1x + (squarewidth / 2) - 10)
 	    	.attr("y", D1y + (squareheight / 2))
@@ -528,7 +528,7 @@ function buildfloorplan(data, datadict) {
 			.attr("fill", "transparent")
 			.attr("stroke", "black")
 			.attr("stroke-width", 2)
-			.attr("id", "D" + i);
+			.attr("class", "D" + i);
 		firstsvg.append("text")
 	    	.attr("x", D1x + (squarewidth / 2) - 10)
 	    	.attr("y", D1y + (squareheight / 2))
@@ -542,7 +542,7 @@ function buildfloorplan(data, datadict) {
 	    .attr("fill", "transparent")
 	    .attr("stroke", "black")
 	    .attr("stroke-width", 2)
-	    .attr("id", "D" + i);
+	    .attr("class", "D" + i);
 	firstsvg.append("text")
 	    	.attr("x", D1x + (squarewidth / 2) - 10)
 	    	.attr("y", D1y + (squareheight / 2))
@@ -561,7 +561,7 @@ function buildfloorplan(data, datadict) {
 			.attr("fill", "transparent")
 			.attr("stroke", "black")
 			.attr("stroke-width", 2)
-			.attr("id", "D" + i);
+			.attr("class", "D" + i);
 		firstsvg.append("text")
 	    	.attr("x", D1x + (squarewidth / 2) - 10)
 	    	.attr("y", D1y + (squareheight / 2))
@@ -575,7 +575,7 @@ function buildfloorplan(data, datadict) {
 	    .attr("fill", "transparent")
 	    .attr("stroke", "black")
 	    .attr("stroke-width", 2)
-	    .attr("id", "D" + i);
+	    .attr("class", "D" + i);
 	firstsvg.append("text")
 	    	.attr("x", D1x + (squarewidth / 2) - 10)
 	    	.attr("y", D1y + (squareheight / 2))
@@ -594,7 +594,7 @@ function buildfloorplan(data, datadict) {
 			.attr("fill", "transparent")
 			.attr("stroke", "black")
 			.attr("stroke-width", 2)
-			.attr("id", "D" + i);
+			.attr("class", "D" + i);
 		firstsvg.append("text")
 	    	.attr("x", D1x + (squarewidth / 2) - 10)
 	    	.attr("y", D1y + (squareheight / 2))
@@ -608,7 +608,7 @@ function buildfloorplan(data, datadict) {
 	    .attr("fill", "transparent")
 	    .attr("stroke", "black")
 	    .attr("stroke-width", 2)
-	    .attr("id", "D" + i);
+	    .attr("class", "D" + i);
 	firstsvg.append("text")
 	    	.attr("x", D1x + (squarewidth / 2) - 10)
 	    	.attr("y", D1y + (squareheight / 2))
@@ -627,7 +627,7 @@ function buildfloorplan(data, datadict) {
 			.attr("fill", "transparent")
 			.attr("stroke", "black")
 			.attr("stroke-width", 2)
-			.attr("id", "D" + i);
+			.attr("class", "D" + i);
 		firstsvg.append("text")
 	    	.attr("x", D1x + (squarewidth / 2) - 10)
 	    	.attr("y", D1y + (squareheight / 2))
@@ -641,7 +641,7 @@ function buildfloorplan(data, datadict) {
 	    .attr("fill", "transparent")
 	    .attr("stroke", "black")
 	    .attr("stroke-width", 2)
-	    .attr("id", "D" + i);
+	    .attr("class", "D" + i);
 	firstsvg.append("text")
 	    	.attr("x", D1x + (squarewidth / 2) - 10)
 	    	.attr("y", D1y + (squareheight / 2))
@@ -663,7 +663,7 @@ function buildfloorplan(data, datadict) {
 			.attr("fill", "transparent")
 			.attr("stroke", "black")
 			.attr("stroke-width", 2)
-			.attr("id", "C" + i);
+			.attr("class", "C" + i);
 		firstsvg.append("text")
 	    	.attr("x", C1x + (squarewidth / 2) - 10)
 	    	.attr("y", C1y + (squareheight / 2))
@@ -684,7 +684,7 @@ function buildfloorplan(data, datadict) {
 			.attr("fill", "transparent")
 			.attr("stroke", "black")
 			.attr("stroke-width", 2)
-			.attr("id", "C" + i);
+			.attr("class", "C" + i);
 		firstsvg.append("text")
 	    	.attr("x", C1x + (squarewidth / 2) - 10)
 	    	.attr("y", C1y + (squareheight / 2))
@@ -705,7 +705,7 @@ function buildfloorplan(data, datadict) {
 			.attr("fill", "transparent")
 			.attr("stroke", "black")
 			.attr("stroke-width", 2)
-			.attr("id", "C" + i);
+			.attr("class", "C" + i);
 		firstsvg.append("text")
 	    	.attr("x", C1x + (squarewidth / 2) - 10)
 	    	.attr("y", C1y + (squareheight / 2))
@@ -719,7 +719,7 @@ function buildfloorplan(data, datadict) {
 	    .attr("fill", "transparent")
 	    .attr("stroke", "black")
 	    .attr("stroke-width", 2)
-	    .attr("id", "C" + i);
+	    .attr("class", "C" + i);
 	firstsvg.append("text")
 	    	.attr("x", C1x + (squarewidth / 2) - 10)
 	    	.attr("y", C1y + (squareheight / 2))
@@ -738,7 +738,7 @@ function buildfloorplan(data, datadict) {
 			.attr("fill", "transparent")
 			.attr("stroke", "black")
 			.attr("stroke-width", 2)
-			.attr("id", "C" + i);
+			.attr("class", "C" + i);
 		firstsvg.append("text")
 	    	.attr("x", C1x + (squarewidth / 2) - 10)
 	    	.attr("y", C1y + (squareheight / 2))
@@ -752,7 +752,7 @@ function buildfloorplan(data, datadict) {
 	    .attr("fill", "transparent")
 	    .attr("stroke", "black")
 	    .attr("stroke-width", 2)
-	    .attr("id", "C" + i);
+	    .attr("class", "C" + i);
 	firstsvg.append("text")
 	    	.attr("x", C1x + (squarewidth / 2) - 10)
 	    	.attr("y", C1y + (squareheight / 2))
@@ -771,7 +771,7 @@ function buildfloorplan(data, datadict) {
 			.attr("fill", "transparent")
 			.attr("stroke", "black")
 			.attr("stroke-width", 2)
-			.attr("id", "C" + i);
+			.attr("class", "C" + i);
 		firstsvg.append("text")
 	    	.attr("x", C1x + (squarewidth / 2) - 10)
 	    	.attr("y", C1y + (squareheight / 2))
@@ -785,7 +785,7 @@ function buildfloorplan(data, datadict) {
 	    .attr("fill", "transparent")
 	    .attr("stroke", "black")
 	    .attr("stroke-width", 2)
-	    .attr("id", "C" + i);
+	    .attr("class", "C" + i);
 	firstsvg.append("text")
 	    	.attr("x", C1x + (squarewidth / 2) - 10)
 	    	.attr("y", C1y + (squareheight / 2))
@@ -804,7 +804,7 @@ function buildfloorplan(data, datadict) {
 			.attr("fill", "transparent")
 			.attr("stroke", "black")
 			.attr("stroke-width", 2)
-			.attr("id", "C" + i);
+			.attr("class", "C" + i);
 		firstsvg.append("text")
 	    	.attr("x", C1x + (squarewidth / 2) - 10)
 	    	.attr("y", C1y + (squareheight / 2))
@@ -818,7 +818,7 @@ function buildfloorplan(data, datadict) {
 	    .attr("fill", "transparent")
 	    .attr("stroke", "black")
 	    .attr("stroke-width", 2)
-	    .attr("id", "C" + i);
+	    .attr("class", "C" + i);
 	firstsvg.append("text")
 	    	.attr("x", C1x + (squarewidth / 2) - 10)
 	    	.attr("y", C1y + (squareheight / 2))
