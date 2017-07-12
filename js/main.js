@@ -100,13 +100,18 @@ $(document).ready(function() {
             }
           }
         }
-        query1selected = colorItems(countryvalues, classvalues, locationdictionary, "query1");
+        query1selected = colorItems(countryvalues, classvalues, locationdictionary, query2selected, "query1");
+        //massqueries = query1selected;
+        //massqueries = massqueries.concat(query2selected);
+        //var combinedlocs = checkIntersection(query1selected, query2selected);
         if (countryfound == false || classfound == false) {
           // then the data item is not in any of the countries selected and we can make sure that its color mapping
           // is transparent
           //massqueries = query1selected;
           //massqueries = massqueries.concat(query2selected);
           transparentMapItem(data[i], query1selected);
+        } else if (countryfound == false && classfound == false) {
+          query1selected = [];
         }
       }
       displayResults(itemselected, 1, count);
@@ -183,13 +188,15 @@ $(document).ready(function() {
               }
             }
           }
-          query1selected = colorItems(countryvalues, classvalues, locationdictionary, "query1");
+          query1selected = colorItems(countryvalues, classvalues, locationdictionary, query2selected, "query1");
           if (countryfound == false || classfound == false) {
             // then the data item is not in any of the countries selected and we can make sure that its color mapping
             // is transparent
             //massqueries = query1selected;
             //massqueries = massqueries.concat(query2selected);
             transparentMapItem(data[i], query1selected);
+          } else if (countryfound == false && classfound == false) {
+            query1selected = [];
           }
         }
         displayResults(itemselected, 1, count);
@@ -260,13 +267,15 @@ $(document).ready(function() {
             }
           }
         }
-        query2selected = colorItems(countryvalues, classvalues, locationdictionary, "query2");
+        query2selected = colorItems(countryvalues, classvalues, locationdictionary, query1selected, "query2");
         if (countryfound == false || classfound == false) {
           // then the data item is not in any of the countries selected and we can make sure that its color mapping
           // is transparent
           //massqueries = query1selected;
           //massqueries = massqueries.concat(query2selected);
           transparentMapItem(data[i], query2selected);
+        } else if (countryfound == false && classfound == false) {
+          query2selected = [];
         }
       }
       displayResults(itemselected, 1, count);
@@ -343,13 +352,15 @@ $(document).ready(function() {
               }
             }
           }
-          query1selected = colorItems(countryvalues, classvalues, locationdictionary, "query2");
+          query1selected = colorItems(countryvalues, classvalues, locationdictionary, query1selected, "query2");
           if (countryfound == false || classfound == false) {
             // then the data item is not in any of the countries selected and we can make sure that its color mapping
             // is transparent
             //massqueries = query1selected;
             //massqueries = massqueries.concat(query2selected);
             transparentMapItem(data[i], query2selected);
+          } else if (countryfound == false && classfound == false) {
+            query2selected = [];
           }
         }
         displayResults(itemselected, 1, count);
@@ -476,7 +487,7 @@ function transparentMapItem(dataitem, queryselected) {
   }
 }
 
-function colorItems(countryvalues, classvalues, locationdictionary, query) {
+function colorItems(countryvalues, classvalues, locationdictionary, oppositequery, query) {
   var countries = [];
   var classes = [];
   countryvalues.forEach(function(country) {
@@ -486,6 +497,15 @@ function colorItems(countryvalues, classvalues, locationdictionary, query) {
     classes = classes.concat(locationdictionary[category]);
   });
   if (classes.length == 0) {
+    if (oppositequery.length != 0) {
+      // then we know that we have to do an AND between the items of the two queries
+      console.log('AND');
+      var commonloc = checkIntersection(countries, oppositequery);
+      commonloc.forEach(function(loc) {
+        $('.' + loc).css({ fill: "purple" });
+      });
+      return commonloc;
+    } 
     if (query === "query1") {
       countries.forEach(function(loc) {
         $('.' + loc).css({ fill: "red" });
@@ -497,6 +517,15 @@ function colorItems(countryvalues, classvalues, locationdictionary, query) {
     }
     return countries;
   } else if (countries.length == 0) {
+    if (oppositequery.length != 0) {
+      // then we know that we have to do an AND between the items of the two queries
+      console.log('AND');
+      var commonloc = checkIntersection(classes, oppositequery);
+      commonloc.forEach(function(loc) {
+        $('.' + loc).css({ fill: "purple" });
+      });
+      return commonloc;
+    } 
     if (query == "query1") {
       classes.forEach(function(loc) {
         $('.' + loc).css({ fill: "red" });
@@ -509,6 +538,15 @@ function colorItems(countryvalues, classvalues, locationdictionary, query) {
     return classes;
   } else {
     var commonloc = checkIntersection(classes, countries);
+    if (oppositequery.length != 0) {
+    // then we know that we have to do an AND between the items of the two queries
+      console.log('AND');
+      var combinedlocs = checkIntersection(commonloc, oppositequery);
+      combinedlocs.forEach(function(loc) {
+        $('.' + loc).css({ fill: "purple" });
+      });
+      return combinedlocs;
+    } 
     if (query === "query1") {
       commonloc.forEach(function(loc) {
         $('.' + loc).css({ fill: "red"});
@@ -518,7 +556,7 @@ function colorItems(countryvalues, classvalues, locationdictionary, query) {
         $('.' + loc).css({fill: "blue" });
       });
     }
-    return commonloc;
+    coloredlocs = commonloc;
   }
 }
 
@@ -677,4 +715,20 @@ function openQueryTable(evt, queryName) {
     var y = document.getElementById('query1');
     y.style.display = 'none';
   }
+}
+
+function clearAll(evt) {
+  query1selected = [];
+  query2selected = [];
+  var secondfloor = ['ENG','NG','NEG','NWG','EEG','EG','SEG','ESG','SG','SWG','EWG','WG'];
+  var letters = ['A', 'B', 'C', 'D'];
+  for (var i = 0; i < 30; i++) {
+    letters.forEach(function(letter) {
+      $('.' + letter + String(i)).css({ fill: "transparent" });
+    });
+  }
+  secondfloor.forEach(function(loc) {
+    $('.' + loc).css({ fill: "transparent" });
+  });
+  $('.machinearcade').css({ fill: "transparent" });
 }

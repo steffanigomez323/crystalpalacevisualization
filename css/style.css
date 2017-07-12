@@ -36,6 +36,11 @@ td {
 	display: inline-block;
 }
 
+#buttonwrapper {
+  display: flex;
+  justify-content: center;
+}
+
 /* Style the tab */
 div.tab {
     overflow: hidden;
