@@ -48,6 +48,13 @@ function buildfloorplan(data, datadict) {
 	 	.attr("fill", "transparent")
 	 	.attr("stroke", "black")
 	 	.attr("stroke-width", 2);
+	 firstsvg.append("text")
+	 	.attr("x", scalespixels(700,693,350) / 3 + 25)
+	    .attr("y", scalespixels(700, 39, 350) / 2)
+	    .attr("dy", ".30em")
+	    .text("Machine Arcade")
+	    .attr("font-size", "11");
+
 
     var picturegallery = secondsvg.append("rect")
 	 	.attr("x", 3.5)
