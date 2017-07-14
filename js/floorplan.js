@@ -850,6 +850,7 @@ function buildfloorplan(data, datadict) {
  			.attr("stroke", "black")
  			.attr("stroke-width", 2)
   			.attr("class", "NEG");
+
  		x -= squarewidth;
  	}
 	x = originalx + (4 * squarewidth);
@@ -940,6 +941,12 @@ function buildfloorplan(data, datadict) {
 			.attr("class", "EG");
 		x -= squarewidth;
 	}
+	secondsvg.append("text")
+  			.attr("x", x + (squarewidth * 2) + squarewidth / 2)
+  			.attr("y", y - (squareheight / 2))
+  			.attr("dy", ".30em")
+  			.text("East Gallery")
+  			.attr("font-size", "11");
 	y -= squareheight;
 	x = originalx + (4 * squarewidth);
 	for (var i = 19; i < 25; i++)
@@ -1038,6 +1045,14 @@ function buildfloorplan(data, datadict) {
 	}
  	y += squareheight;
 	x = originalx + (3 * squarewidth);
+	/*secondsvg.append("text")
+  			.attr("x", x)
+  			.attr("y", y)
+  			.attr("dy", ".30em")
+  			.style("text-anchor", "end")
+  			.attr("transform", "rotate(90)")
+  			.text("South Gallery")
+  			.attr("font-size", "11");*/
 	for (var i = 11; i < 12; i++)
 	{
 		var square = secondsvg.append("rect")
@@ -1509,6 +1524,16 @@ function buildfloorplan(data, datadict) {
 			.attr("class", "WG");
 		y += squareheight;
 	}
+
+	secondsvg.append("text")
+  			.attr("x", x + (squarewidth + squarewidth / 2))
+  			.attr("y", y + (squareheight + squareheight / 2))
+  			.attr("dy", ".30em")
+  			.style("text-anchor", "end")
+  			.attr("transform", "rotate(0)")
+  			.text("West Gallery")
+  			.attr("font-size", "11");
+
 	for (var i = 14; i < 15; i++) {
  		var square = secondsvg.append("rect")
  			.attr("x", x)
